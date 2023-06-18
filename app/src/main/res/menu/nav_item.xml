@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/baseline_home_24"
+        android:title="Home"
+        app:cnb_backgroundColor="@color/nav_bg"
+        app:cnb_iconColor="#ffffff"
+        app:cnb_textColor="#ffffff" />
+
+    <item
+        android:id="@+id/booking"
+        android:icon="@drawable/booking_24"
+        android:title="Booking"
+        app:cnb_backgroundColor="@color/nav_bg"
+        app:cnb_iconColor="#ffffff"
+        app:cnb_textColor="#ffffff" />
+
+    <item
+        android:id="@+id/store"
+        android:icon="@drawable/baseline_store_24"
+        android:title="Store"
+        app:cnb_backgroundColor="@color/nav_bg"
+        app:cnb_iconColor="#ffffff"
+        app:cnb_textColor="#ffffff" />
+
+    <item
+        android:id="@+id/blog"
+        android:icon="@drawable/blog_24"
+        android:title="Blog"
+        app:cnb_backgroundColor="@color/nav_bg"
+        app:cnb_iconColor="#ffffff"
+        app:cnb_textColor="#ffffff" />
+
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/user_24"
+        android:title="Profile"
+        app:cnb_backgroundColor="@color/nav_bg"
+        app:cnb_iconColor="#ffffff"
+        app:cnb_textColor="#ffffff" />
+</menu>

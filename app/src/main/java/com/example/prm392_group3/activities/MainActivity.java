@@ -1,23 +1,27 @@
 package com.example.prm392_group3.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.prm392_group3.R;
 import com.example.prm392_group3.activities.authen.Login;
+import com.example.prm392_group3.activities.blog.AllBlog;
+import com.example.prm392_group3.activities.booking.Booking;
+import com.example.prm392_group3.activities.home.Home;
+import com.example.prm392_group3.activities.profile.Profile;
+import com.example.prm392_group3.activities.store.Store;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView textViewWelcome;
-    private Button buttonLogout;
-
     private FirebaseAuth firebaseAuth;
+
+    private ChipNavigationBar chipNavigationBar;
+    private Fragment fragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,34 +31,38 @@ public class MainActivity extends AppCompatActivity {
         // Khởi tạo FirebaseAuth
         firebaseAuth = FirebaseAuth.getInstance();
 
-        // Ánh xạ các view
-        textViewWelcome = findViewById(R.id.textViewWelcome);
-        buttonLogout = findViewById(R.id.buttonLogout);
-
         // Lấy thông tin người dùng đã đăng nhập
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user == null) {
-            // Chuyển về trang đăng nhập (LoginActivity)
             Intent intent = new Intent(MainActivity.this, Login.class);
             startActivity(intent);
             finish();
-        } else {
-            String username = user.getEmail(); // Lấy email của người dùng
-            textViewWelcome.setText("Welcome, " + username);
-
-            // Xử lý sự kiện click của nút Logout
-            buttonLogout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Đăng xuất
-                    firebaseAuth.signOut();
-
-                    // Chuyển về trang đăng nhập (LoginActivity)
-                    Intent intent = new Intent(MainActivity.this, Login.class);
-                    startActivity(intent);
-                    finish();
-                }
-            });
         }
+
+        chipNavigationBar = findViewById(R.id.chipNavigation);
+        chipNavigationBar.setItemSelected(R.id.home, true);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new Home()).commit();
+
+        chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int i) {
+                if (i == R.id.home) {
+                    fragment = new Home();
+                } else if (i == R.id.booking) {
+                    fragment = new Booking();
+                } else if (i == R.id.profile) {
+                    fragment = new Profile();
+                } else if (i == R.id.store) {
+                    fragment = new Store();
+                } else if (i == R.id.blog) {
+                    fragment = new AllBlog();
+                }
+
+                if (fragment != null) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                }
+            }
+        });
     }
+
 }
