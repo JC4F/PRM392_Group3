@@ -2,6 +2,8 @@
 
     <style name="Theme.PRM392_Group3" parent="Base.Theme.PRM392_Group3">
         <!-- Transparent system bars for edge-to-edge. -->
+        <item name="android:colorBackground">@color/app_black</item>
+
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">?attr/isLightTheme</item>

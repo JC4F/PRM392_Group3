@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="nav_bg">#0084f4</color>
+    <color name="app_black">#1B1B1D</color>
+    <color name="app_white">#F6F6F6</color>
+    <color name="app_strong_blue">#0084f4</color>
+    <color name="app_weak_blue">#4EAEFF</color>
+    <color name="app_main_item">#dfdfdf</color>
 </resources>

@@ -2,13 +2,21 @@ package com.example.prm392_group3.activities.profile;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.prm392_group3.R;
+import com.example.prm392_group3.models.OptionItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +24,10 @@ import com.example.prm392_group3.R;
  * create an instance of this fragment.
  */
 public class Profile extends Fragment {
+
+    private RecyclerView recyclerView;
+    private ProfileAdapter adapter;
+    private List<OptionItem> dataList;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,9 +70,25 @@ public class Profile extends Fragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        dataList = new ArrayList<>();
+        dataList.add(new OptionItem(R.drawable.baseline_save_24, "My Save", null));
+        dataList.add(new OptionItem(R.drawable.baseline_password_24, "Change Password", null));
+        dataList.add(new OptionItem(R.drawable.baseline_help_24, "FAQs", null));
+        dataList.add(new OptionItem(R.drawable.baseline_logout_24, "Logout", null));
+        // ...
+
+        adapter = new ProfileAdapter(requireContext(), dataList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+        recyclerView = rootView.findViewById(R.id.pofile_recycle_view);
+        return rootView;
     }
 }
