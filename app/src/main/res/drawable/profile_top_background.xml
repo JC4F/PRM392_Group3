@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:topLeftRadius="0dp"
+        android:topRightRadius="0dp"
+        android:bottomLeftRadius="0dp"
+        android:bottomRightRadius="20dp" /> <!-- Áp dụng góc corner chỉ ở vị trí bottom end -->
+<!--    <solid android:color="@color/app_weak_blue" />-->
+    <gradient
+        android:startColor="@color/app_strong_blue"
+        android:endColor="#A6D6FF"
+        android:angle="0" />
+    <stroke android:width="0dp"
+        android:color="@color/app_white" /> <!-- Màu viền -->
+</shape>
+
+
