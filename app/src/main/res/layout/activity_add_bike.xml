@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.store.AddBike">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/add_bike_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/app_weak_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/add_bike_btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="Back"
+                app:tint="@color/app_white"
+                android:src="@drawable/add_bike_arrow_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Bike"
+                android:layout_gravity="center"
+                android:textColor="@color/app_white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/add_bike_toolbar">
+
+            <!-- Edit text for bike name -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_bike_lt_bike_name"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:hint="Enter Bike Name"
+                android:padding="5dp"
+                android:textColorHint="@color/app_black"
+                app:hintTextColor="@color/app_black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_bike_bike_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textColor="@color/app_black"
+                    android:textColorHint="@color/app_black"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Edit text for bike description -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_bike_tl_bike_description"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:hint="Enter Bike Description"
+                android:padding="5dp"
+                android:textColorHint="@color/app_black"
+                app:boxStrokeColor="@color/purple_200"
+                app:hintTextColor="@color/app_black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/bike_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:lines="4"
+                    android:maxLines="10"
+                    android:scrollbars="vertical"
+                    android:textColor="@color/app_black"
+                    android:textColorHint="@color/app_black"
+                    android:textSize="14sp"
+                    app:boxStrokeColor="@color/purple_200" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Edit text for image URL -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_bike_tl_imageUrl"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:hint="Enter Image URL"
+                android:padding="5dp"
+                android:textColorHint="@color/app_black"
+                app:hintTextColor="@color/app_black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_bike_image_url"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textColor="@color/app_black"
+                    android:textColorHint="@color/app_black"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Edit text for bike price per hour -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_bike_tl_pricePerHour"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:hint="Enter Price per Hour"
+                android:padding="5dp"
+                android:textColorHint="@color/app_black"
+                app:hintTextColor="@color/app_black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_bike_pricePerHour"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/app_black"
+                    android:textColorHint="@color/app_black"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Edit text for bike quantity -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_bike_tl_quantity"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:hint="Enter Quantity"
+                android:padding="5dp"
+                android:textColorHint="@color/app_black"
+                app:hintTextColor="@color/app_black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_bike_quantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textColor="@color/app_black"
+                    android:textColorHint="@color/app_black"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Checkbox for bike availability -->
+            <CheckBox
+                android:id="@+id/add_bike_checkbox_available"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Is Available"
+                android:textColor="@color/app_black" />
+
+            <!-- Button for adding a new bike -->
+            <Button
+                android:id="@+id/add_bike_btn_add_bike"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/app_weak_blue"
+                android:text="Add Your Bike"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
+
+        <!-- Progress bar for loading indicator -->
+        <ProgressBar
+            android:id="@+id/add_bike_pb_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

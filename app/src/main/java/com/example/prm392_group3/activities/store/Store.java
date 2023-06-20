@@ -1,5 +1,6 @@
 package com.example.prm392_group3.activities.store;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.prm392_group3.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +63,18 @@ public class Store extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_store, container, false);
+        View view = inflater.inflate(R.layout.fragment_store, container, false);
+
+        FloatingActionButton addStoreFab = view.findViewById(R.id.add_store_fab);
+        addStoreFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // getActivity(): truy cập đến Activity chứa Fragment đó
+                Intent intent = new Intent(getActivity(), AddBike.class);
+                startActivity(intent);
+            }
+        });
+
+        return view;
     }
 }
