@@ -30,6 +30,8 @@ public class Register extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
 
+    private EditText editTextRePass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +46,7 @@ public class Register extends AppCompatActivity {
         buttonRegister = findViewById(R.id.buttonRegister);
         progressBar = findViewById(R.id.progressBar);
         tvRegisterErrorMessage = findViewById(R.id.tvRegisterErrorMessage);
+        editTextRePass = findViewById(R.id.re_register_password);
 
         // Xử lý sự kiện click của nút Register
         buttonRegister.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +55,7 @@ public class Register extends AppCompatActivity {
                 // Lấy thông tin đăng ký từ EditText
                 String email = editTextEmail.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
-
+                String repass = editTextRePass.getText().toString().trim();
                 // Kiểm tra xem email và password có hợp lệ hay không
                 if (TextUtils.isEmpty(email)) {
                     editTextEmail.setError("Please enter your email");
@@ -61,6 +64,17 @@ public class Register extends AppCompatActivity {
 
                 if (TextUtils.isEmpty(password)) {
                     editTextPassword.setError("Please enter your password");
+                    return;
+                }
+
+                if(TextUtils.isEmpty(repass)) {
+                    editTextRePass.setError("Please enter your re-password");
+                    return;
+                }
+
+                // Kiểm tra xem nếu repass không trùng với pass
+                if(!password.equals(repass)) {
+                    editTextRePass.setError("Re-pass must match with password");
                     return;
                 }
 

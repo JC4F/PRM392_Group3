@@ -14,6 +14,9 @@ import android.widget.TextView;
 
 import com.example.prm392_group3.R;
 import com.example.prm392_group3.activities.MainActivity;
+import com.google.android.gms.auth.api.identity.BeginSignInRequest;
+import com.google.android.gms.auth.api.identity.Identity;
+import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -30,6 +33,13 @@ public class Login extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
 
+    private Button btnGG;
+
+    private SignInClient oneTapClient;
+    private BeginSignInRequest signInRequest;
+
+    private TextView forgotPass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +54,25 @@ public class Login extends AppCompatActivity {
         buttonLogin = findViewById(R.id.buttonLogin);
         progressBar = findViewById(R.id.progressBar);
         tvLoginErrorMessage = findViewById(R.id.tvLoginErrorMessage);
+        forgotPass = findViewById(R.id.txtForgotPass);
+
+
+        // Xử lý đăng nhập với google
+        oneTapClient = Identity.getSignInClient(this);
+        signInRequest = BeginSignInRequest.builder()
+                .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
+                        .setSupported(true)
+                        .build())
+                .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                        .setSupported(true)
+                        // Your server's client ID, not your Android client ID.
+                        .setServerClientId(getString(R.string.default_web_client_id))
+                        // Only show accounts previously used to sign in.
+                        .setFilterByAuthorizedAccounts(true)
+                        .build())
+                // Automatically sign in when exactly one credential is retrieved.
+                .setAutoSelectEnabled(true)
+                .build();
 
         // Xử lý sự kiện click của nút Login
         buttonLogin.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +123,16 @@ public class Login extends AppCompatActivity {
             }
         });
 
+
+        forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Chuyển sang Forgot Pass Activity
+                Intent intent = new Intent(Login.this, Forgotpass.class);
+                startActivity(intent);
+            }
+        });
+
         // Xử lý sự kiện click của TextView Register
         TextView textViewRegister = findViewById(R.id.textViewRegister);
         textViewRegister.setOnClickListener(new View.OnClickListener() {
@@ -105,5 +144,6 @@ public class Login extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 }
