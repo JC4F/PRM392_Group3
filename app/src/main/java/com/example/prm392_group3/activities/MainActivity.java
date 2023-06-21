@@ -11,6 +11,7 @@ import com.example.prm392_group3.activities.authen.Login;
 import com.example.prm392_group3.activities.blog.AllBlog;
 import com.example.prm392_group3.activities.booking.Booking;
 import com.example.prm392_group3.activities.home.Home;
+import com.example.prm392_group3.activities.orders.ordersManagement;
 import com.example.prm392_group3.activities.profile.Profile;
 import com.example.prm392_group3.activities.store.Store;
 import com.google.firebase.auth.FirebaseAuth;
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new Store();
                 } else if (i == R.id.blog) {
                     fragment = new AllBlog();
+                } else if(i == R.id.ordersManagement){
+                    fragment = new ordersManagement();
                 }
 
                 if (fragment != null) {
