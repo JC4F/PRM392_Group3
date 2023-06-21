@@ -1,5 +1,6 @@
 package com.example.prm392_group3.activities.authen;
 
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,18 +9,19 @@ import android.os.Bundle;
 import android.os.Debug;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.example.prm392_group3.R;
 import com.example.prm392_group3.activities.MainActivity;
+import com.example.prm392_group3.activities.store.AddBike;
+import com.example.prm392_group3.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity {
     private EditText editTextEmail;
@@ -31,6 +33,9 @@ public class Register extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
 
     private EditText editTextRePass;
+
+    FirebaseDatabase database;
+    DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,13 +72,13 @@ public class Register extends AppCompatActivity {
                     return;
                 }
 
-                if(TextUtils.isEmpty(repass)) {
+                if (TextUtils.isEmpty(repass)) {
                     editTextRePass.setError("Please enter your re-password");
                     return;
                 }
 
                 // Kiểm tra xem nếu repass không trùng với pass
-                if(!password.equals(repass)) {
+                if (!password.equals(repass)) {
                     editTextRePass.setError("Re-pass must match with password");
                     return;
                 }
@@ -94,6 +99,29 @@ public class Register extends AppCompatActivity {
                                     FirebaseUser user = firebaseAuth.getCurrentUser();
                                     if (user != null) {
                                         // Chuyển sang MainActivity
+
+                                        // Đưa thông tin đăng kí vào bảng user (DB realtime)
+                                        database = FirebaseDatabase.getInstance();
+                                        myRef = database.getReference("User");
+
+                                        //Tạo đối tượng User mới
+                                        User userModel = new User(user.getUid(), user.getEmail(), "", "", "",  false);
+//                                        String userId = myRef.push().getKey();
+//                                        userModel.setId(userId);
+                                        myRef.child(user.getUid()).setValue(userModel, new DatabaseReference.CompletionListener() {
+                                            @Override
+                                            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                                if (databaseError == null) {
+                                                    // Hiển thị thông báo thành công
+                                                    Toast.makeText(Register.this, "User register successfully", Toast.LENGTH_SHORT).show();
+                                                    // Đóng Activity
+                                                    finish();
+                                                } else {
+                                                    // Hiển thị thông báo lỗi
+                                                    Toast.makeText(Register.this, "Failed to register: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
                                         Intent intent = new Intent(Register.this, MainActivity.class);
                                         startActivity(intent);
                                         finish();
@@ -105,6 +133,8 @@ public class Register extends AppCompatActivity {
                                 }
                             }
                         });
+
+
             }
         });
 
