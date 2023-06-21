@@ -1,70 +1,106 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:gravity="center"
-    tools:context=".activities.authen.Login">
+              xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:gravity="center"
+              tools:context=".activities.authen.Login">
 
+
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:src="@drawable/login2"
+            android:elevation="4dp"
+    />
     <TextView
-        android:id="@+id/textViewTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="24dp" />
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp" android:textColor="#081D41 "
+            android:layout_marginTop="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_gravity="start"
+    />
 
     <EditText
-        android:id="@+id/login_email"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="10dp"
-        android:hint="Username" />
-
+            android:id="@+id/login_email"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="10dp"
+            android:hint="Username" android:textColor="#000000" android:textColorHint="#777575"/>
     <EditText
-        android:id="@+id/login_password"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="10dp"
-        android:hint="Password"
-        android:inputType="textPassword" />
-
+            android:id="@+id/login_password"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="10dp"
+            android:hint="Password"
+            android:inputType="textPassword" android:textColor="#777575" android:textColorHint="#717070"/>
+    <TextView
+            android:id="@+id/txtForgotPass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="16dp"
+            android:clickable="true"
+            android:gravity="center|start"
+            android:layout_gravity="start"
+            android:text="Forgot password"
+            android:textColor="#0000FF" />
     <Button
-        android:id="@+id/buttonLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login" />
+            android:id="@+id/buttonLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:text="Login" android:backgroundTint="#407BFE"
+            android:textColor="#FFFFFF"/>
+    <Button
+            android:id="@+id/btnLoginGG"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:text="Login with Google" android:backgroundTint="#B2B3B3"
+            android:textColor="#FFFFFF"/>
 
     <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
     <TextView
-        android:id="@+id/tvLoginErrorMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="16dp"
-        android:textColor="#FF0000"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:visibility="gone" />
+            android:id="@+id/tvLoginErrorMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="16dp"
+            android:textColor="#FF0000"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="gone" />
 
     <TextView
-        android:id="@+id/textViewRegister"
-        android:layout_width="221dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="Don't have an account? Register"
-        android:textColor="#0000FF" />
+            android:id="@+id/textViewRegister"
+            android:layout_width="221dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="60dp"
+            android:clickable="true"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="Don't have an account? Register"
+            android:textColor="#0000FF" />
 
 </LinearLayout>
