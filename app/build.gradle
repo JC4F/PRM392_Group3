@@ -50,4 +50,5 @@ dependencies {
 
     implementation 'com.github.ismaeldivita:chip-navigation-bar:1.4.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.20"
+    implementation 'com.google.android.gms:play-services-auth:20.5.0'
 }
