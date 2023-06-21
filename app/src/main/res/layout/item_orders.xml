@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="275dp"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout3"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:background="@drawable/rounded_rectangle_bg"
+            android:backgroundTint="#DACFCF"
+            android:elevation="8dp">
+
+            <ImageView
+                android:id="@+id/iconImageView"
+                android:layout_width="40dp"
+                android:layout_height="41dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="194dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/delivery_box" />
+
+            <TextView
+                android:id="@+id/bikeName"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/bookID"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="9dp"
+                android:layout_marginBottom="5dp"
+                android:text="BikeNameGoHere"
+                android:textColor="#5E5954"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/bookID"
+                android:layout_width="169dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="197dp"
+                android:text="#QTE1401KDA"
+                android:textColor="#7C6E5D"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout05"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="65dp"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/view05"
+                    android:layout_width="225dp"
+                    android:layout_height="2dp"
+                    android:background="#914B4B" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/totalPriceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/endDateTextView"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="3dp"
+                android:text="#Price Per Hour: $15"
+                android:textColor="#7C6E5D"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/endDateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/startDateTextView"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:text="#End Date: 05/06/2021 12:47:53"
+                android:textColor="#7C6E5D"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/startDateTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/bikeName"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="146dp"
+                android:text="#Start Date: 05/06/2021 12:47:53"
+                android:textColor="#7C6E5D"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imageProduct"
+                android:layout_width="225dp"
+                android:layout_height="95dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="75dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_avatar" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout2"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginLeft="-245dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_rectangle"
+            android:backgroundTint="#D6C5C5"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="312dp" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
