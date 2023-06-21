@@ -1,5 +1,6 @@
 package com.example.prm392_group3.activities.authen;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.prm392_group3.R;
+import com.example.prm392_group3.activities.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,6 +45,8 @@ public class Forgotpass extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         // Hiển thị thông báo thành công nếu gửi email thành công
                                         Toast.makeText(getApplicationContext(), "Đã gửi email đặt lại mật khẩu", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(Forgotpass.this, Login.class);
+                                        startActivity(intent);
                                     } else {
                                         // Hiển thị thông báo lỗi nếu gửi email không thành công
                                         Toast.makeText(getApplicationContext(), "Gửi email đặt lại mật khẩu thất bại", Toast.LENGTH_SHORT).show();
