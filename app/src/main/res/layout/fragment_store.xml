@@ -6,14 +6,65 @@
     android:layout_height="match_parent"
     tools:context=".activities.store.Store">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/store_ln_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Thanh tìm kiếm -->
+            <EditText
+                android:id="@+id/editTextSearch"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:hint="Search bike..."
+                android:padding="8dp"
+                android:textColorHint="@color/app_black"
+                android:textColor="@color/app_black"
+                />
+
+            <!-- Nút lọc -->
+            <ImageButton
+                android:id="@+id/buttonFilter"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="Filter"
+                android:padding="8dp"
+                android:src="@drawable/store_filter_alt_24" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/store_recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="50dp"
+            android:padding="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/store_ln_top" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <!-- Floating action button for adding store -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_store_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginBottom="100dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="80dp"
         android:contentDescription="Add Bike"
         android:src="@drawable/store_add_24" />
 
