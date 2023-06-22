@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/store_book_btn"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="#F1DEDE"
+        android:background="#F1D2D2"
         android:padding="8dp">
 
         <ImageView
@@ -100,15 +100,46 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
+    <LinearLayout
+        android:id="@+id/store_button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/store_update_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Update"
+            android:background="@color/app_weak_blue"
+            android:layout_marginEnd="4dp"
+            android:textColor="@color/app_black"
+            android:textStyle="bold"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/store_delete_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:background="@color/app_weak_blue"
+            android:text="Delete"
+            android:textColor="@color/app_black"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/store_book_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Book Now"
         android:background="@drawable/store_item_btn"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="invisible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

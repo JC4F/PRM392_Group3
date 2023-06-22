@@ -6,13 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Debug;
 import android.text.TextUtils;
 import android.view.View;
 
 import com.example.prm392_group3.R;
 import com.example.prm392_group3.activities.MainActivity;
-import com.example.prm392_group3.activities.store.AddBike;
 import com.example.prm392_group3.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

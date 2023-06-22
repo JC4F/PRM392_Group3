@@ -25,7 +25,7 @@
                 android:name=".activities.blog.AllBlog"
                 android:exported="false"/>
         <activity
-                android:name=".activities.store.AddBike"
+                android:name=".activities.store.AddOrUpddateBike"
                 android:exported="false"/>
         <activity
                 android:name=".activities.authen.Login"

@@ -1,6 +1,7 @@
 package com.example.prm392_group3.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,12 +9,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prm392_group3.R;
+import com.example.prm392_group3.activities.store.AddOrUpddateBike;
 import com.example.prm392_group3.models.Bike;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,6 +27,8 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
     private int commentCount;
     private List<Integer> ratingList;
     private Context context;
+
+    AppCompatButton updateBtn;
 
     public BikeAdapter(Context context, List<Bike> bikeList, int commentCount, List<Integer> ratingList) {
         this.context = context;
@@ -36,6 +42,8 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
     public BikeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Inflate layout cho mỗi item trong danh sách
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_bike_item, parent, false);
+        updateBtn = view.findViewById(R.id.store_update_btn);
+
         return new ViewHolder(view);
     }
 
@@ -51,6 +59,16 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
         holder.ratingsCount.setText(String.format("%.1f (%d ratings)", calculateAverageRating(), ratingList.size()));
         holder.commentsCount.setText(String.valueOf(commentCount));
         holder.bikeStatus.setText(bike.isAvailable() ? "Available" : "Unavailable");
+
+        updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Chuyển sang trang mới và truyền mô hình Bike qua Intent
+                Intent intent = new Intent(context, AddOrUpddateBike.class);
+                intent.putExtra("Bike", bike);
+                context.startActivity(intent);
+            }
+        });
     }
 
     private float calculateAverageRating() {
