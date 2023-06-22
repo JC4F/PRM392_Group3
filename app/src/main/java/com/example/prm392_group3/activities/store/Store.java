@@ -47,6 +47,7 @@ public class Store extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    public static ProgressBar loadingProgressBar;
     public Store() {
         // Required empty public constructor
     }
@@ -87,7 +88,7 @@ public class Store extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_store, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.store_recycle_view);
-        ProgressBar loadingProgressBar = view.findViewById(R.id.store_loading_progress);
+        loadingProgressBar = view.findViewById(R.id.store_loading_progress);
         FloatingActionButton addStoreFab = view.findViewById(R.id.add_store_fab);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());

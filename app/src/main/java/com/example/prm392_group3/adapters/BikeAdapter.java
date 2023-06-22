@@ -1,12 +1,17 @@
 package com.example.prm392_group3.adapters;
 
+import static com.example.prm392_group3.activities.store.Store.loadingProgressBar;
+
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
@@ -15,11 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.prm392_group3.R;
 import com.example.prm392_group3.activities.store.AddOrUpddateBike;
 import com.example.prm392_group3.models.Bike;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.util.List;
-import java.util.Locale;
 
 public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
 
@@ -27,8 +33,11 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
     private int commentCount;
     private List<Integer> ratingList;
     private Context context;
+    DatabaseReference myRef;
 
     AppCompatButton updateBtn;
+    AppCompatButton deleteBtn;
+    AppCompatButton bookingBtn;
 
     public BikeAdapter(Context context, List<Bike> bikeList, int commentCount, List<Integer> ratingList) {
         this.context = context;
@@ -42,7 +51,12 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
     public BikeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Inflate layout cho mỗi item trong danh sách
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_bike_item, parent, false);
+
+        myRef = FirebaseDatabase.getInstance().getReference("Bike");
+
         updateBtn = view.findViewById(R.id.store_update_btn);
+        deleteBtn = view.findViewById(R.id.store_delete_btn);
+        bookingBtn = view.findViewById(R.id.store_book_btn);
 
         return new ViewHolder(view);
     }
@@ -69,6 +83,14 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
                 context.startActivity(intent);
             }
         });
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Hiển thị hộp thoại xác nhận xóa
+                showDeleteConfirmationDialog(bike);
+            }
+        });
     }
 
     private float calculateAverageRating() {
@@ -79,6 +101,51 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
         }
         return (float) sum / ratingList.size();
     }
+
+    private void showDeleteConfirmationDialog(Bike bike) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Confirm Delete");
+        builder.setMessage("Are you sure you want to delete this bike?");
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Thực hiện xóa bike từ Firebase Realtime Database
+                deleteBike(bike);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Đóng dialog
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void deleteBike(Bike bike) {
+        String bikeId = bike.getId();
+
+        loadingProgressBar.setVisibility(View.VISIBLE);
+
+        myRef.child(bikeId).removeValue(new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                loadingProgressBar.setVisibility(View.GONE);
+
+                if (databaseError == null) {
+                    // Hiển thị thông báo thành công
+                    Toast.makeText(context, "Bike deleted successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Hiển thị thông báo lỗi
+                    Toast.makeText(context, "Failed to delete bike: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+
 
     @Override
     public int getItemCount() {
