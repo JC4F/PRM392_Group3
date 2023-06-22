@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.prm392_group3.R;
 import com.example.prm392_group3.adapters.BikeAdapter;
@@ -86,22 +87,29 @@ public class Store extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_store, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.store_recycle_view);
+        ProgressBar loadingProgressBar = view.findViewById(R.id.store_loading_progress);
+        FloatingActionButton addStoreFab = view.findViewById(R.id.add_store_fab);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         BikeAdapter bikeAdapter = new BikeAdapter(getContext(), bikeList, commentCount, ratingList);
         recyclerView.setAdapter(bikeAdapter);
-        myRef = FirebaseDatabase.getInstance().getReference("Bike");
 
+        myRef = FirebaseDatabase.getInstance().getReference("Bike");
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                loadingProgressBar.setVisibility(View.VISIBLE);
+
                 bikeList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Bike bike = snapshot.getValue(Bike.class);
                     bikeList.add(bike);
                 }
                 bikeAdapter.notifyDataSetChanged();
+
+                loadingProgressBar.setVisibility(View.GONE);
             }
 
             @Override
@@ -110,7 +118,7 @@ public class Store extends Fragment {
             }
         });
 
-        FloatingActionButton addStoreFab = view.findViewById(R.id.add_store_fab);
+
         addStoreFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

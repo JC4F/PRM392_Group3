@@ -68,4 +68,11 @@
         android:contentDescription="Add Bike"
         android:src="@drawable/store_add_24" />
 
+    <ProgressBar
+        android:id="@+id/store_loading_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="visible" />
+
 </FrameLayout>

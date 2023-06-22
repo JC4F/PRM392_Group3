@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/store_book_btn"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="#f1f1f1"
+        android:background="#F1DEDE"
         android:padding="8dp">
 
         <ImageView
