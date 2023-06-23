@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.prm392_group3.R;
 import com.example.prm392_group3.activities.store.AddOrUpddateBike;
 import com.example.prm392_group3.models.Bike;
+import com.example.prm392_group3.models.User;
+import com.example.prm392_group3.utils.ObjectStorageUtil;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -35,6 +37,7 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
     private Context context;
     DatabaseReference myRef;
 
+    User userDetails;
     AppCompatButton updateBtn;
     AppCompatButton deleteBtn;
     AppCompatButton bookingBtn;
@@ -44,6 +47,7 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
         this.bikeList = bikeList;
         this.commentCount = commentCount;
         this.ratingList = ratingList;
+        this.userDetails = ObjectStorageUtil.loadObject(context, "user_data.json", User.class);
     }
 
     @NonNull
@@ -57,6 +61,12 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
         updateBtn = view.findViewById(R.id.store_update_btn);
         deleteBtn = view.findViewById(R.id.store_delete_btn);
         bookingBtn = view.findViewById(R.id.store_book_btn);
+
+        if (userDetails!=null && !userDetails.isRole()){
+            updateBtn.setVisibility(View.GONE);
+            deleteBtn.setVisibility(View.GONE);
+            bookingBtn.setVisibility(View.VISIBLE);
+        }
 
         return new ViewHolder(view);
     }

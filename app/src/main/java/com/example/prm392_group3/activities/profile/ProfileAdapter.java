@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prm392_group3.activities.authen.Login;
 import com.example.prm392_group3.models.OptionItem;
+import com.example.prm392_group3.utils.ObjectStorageUtil;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
@@ -48,6 +49,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             public void onClick(View view) {
                 // Kiểm tra nội dung của TextView
                 if (holder.descriptionText.getText().toString().equals("Logout")) {
+                    // xoa user
+                    ObjectStorageUtil.deleteObject(context, "user_data.json");
+
                     // Thực hiện hành động Logout
                     performLogoutAction();
                 }

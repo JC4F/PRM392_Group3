@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 
 import com.example.prm392_group3.R;
 import com.example.prm392_group3.activities.MainActivity;
+import com.example.prm392_group3.models.User;
+import com.example.prm392_group3.utils.ObjectStorageUtil;
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
 import com.google.android.gms.auth.api.identity.Identity;
 import com.google.android.gms.auth.api.identity.SignInClient;
@@ -22,6 +25,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 
 public class Login extends AppCompatActivity {
 
@@ -32,6 +43,7 @@ public class Login extends AppCompatActivity {
     private TextView tvLoginErrorMessage;
 
     private FirebaseAuth firebaseAuth;
+    DatabaseReference myRef;
 
     private Button btnGG;
 
@@ -47,6 +59,7 @@ public class Login extends AppCompatActivity {
 
         // Khởi tạo FirebaseAuth
         firebaseAuth = FirebaseAuth.getInstance();
+        myRef = FirebaseDatabase.getInstance().getReference("User");
 
         // Ánh xạ các view
         editTextUsername = findViewById(R.id.login_email);
@@ -107,12 +120,32 @@ public class Login extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     // Đăng nhập thành công
                                     FirebaseUser user = firebaseAuth.getCurrentUser();
-                                    if (user != null) {
-                                        // Chuyển sang MainActivity
-                                        Intent intent = new Intent(Login.this, MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                    }
+                                    myRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            if (dataSnapshot.exists()) {
+                                                User userData = dataSnapshot.getValue(User.class);
+
+                                                if (userData != null) {
+                                                    ObjectStorageUtil.saveObject(getApplicationContext(), "user_data.json", userData);
+
+                                                    // Chuyển sang MainActivity
+                                                    Intent intent = new Intent(Login.this, MainActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            Log.e("ObjectStorageUtil", "Error reading user data: " + databaseError.getMessage());
+                                            firebaseAuth.signOut();
+                                            tvLoginErrorMessage.setVisibility(View.VISIBLE);
+                                            tvLoginErrorMessage.setText("Can not get user data!");
+                                        }
+                                    });
+
                                 } else {
                                     // Đăng nhập thất bại
                                     tvLoginErrorMessage.setVisibility(View.VISIBLE);

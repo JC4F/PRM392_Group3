@@ -16,6 +16,9 @@ import android.widget.ProgressBar;
 import com.example.prm392_group3.R;
 import com.example.prm392_group3.adapters.BikeAdapter;
 import com.example.prm392_group3.models.Bike;
+import com.example.prm392_group3.models.User;
+import com.example.prm392_group3.utils.ObjectStorageUtil;
+import com.example.prm392_group3.utils.UserUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,7 +35,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class Store extends Fragment {
-
+    User userDetails;
     DatabaseReference myRef;
     private List<Bike> bikeList;
     private int commentCount;
@@ -47,6 +50,7 @@ public class Store extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private FloatingActionButton addStoreFab;
     public static ProgressBar loadingProgressBar;
     public Store() {
         // Required empty public constructor
@@ -77,6 +81,7 @@ public class Store extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        userDetails = ObjectStorageUtil.loadObject(getContext(), "user_data.json", User.class);
     }
 
     @Override
@@ -89,7 +94,7 @@ public class Store extends Fragment {
         View view = inflater.inflate(R.layout.fragment_store, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.store_recycle_view);
         loadingProgressBar = view.findViewById(R.id.store_loading_progress);
-        FloatingActionButton addStoreFab = view.findViewById(R.id.add_store_fab);
+        addStoreFab = view.findViewById(R.id.add_store_fab);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -97,6 +102,10 @@ public class Store extends Fragment {
         recyclerView.setAdapter(bikeAdapter);
 
         myRef = FirebaseDatabase.getInstance().getReference("Bike");
+
+        if (userDetails!=null && !userDetails.isRole()){
+            addStoreFab.setVisibility(View.GONE);
+        }
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override

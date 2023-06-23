@@ -12,6 +12,7 @@ import android.view.View;
 import com.example.prm392_group3.R;
 import com.example.prm392_group3.activities.MainActivity;
 import com.example.prm392_group3.models.User;
+import com.example.prm392_group3.utils.ObjectStorageUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -20,6 +21,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 
 public class Register extends AppCompatActivity {
     private EditText editTextEmail;
@@ -96,14 +100,13 @@ public class Register extends AppCompatActivity {
                                     // Đăng ký thành công
                                     FirebaseUser user = firebaseAuth.getCurrentUser();
                                     if (user != null) {
-                                        // Chuyển sang MainActivity
-
                                         // Đưa thông tin đăng kí vào bảng user (DB realtime)
                                         database = FirebaseDatabase.getInstance();
                                         myRef = database.getReference("User");
 
                                         //Tạo đối tượng User mới
                                         User userModel = new User(user.getUid(), user.getEmail(), "", "", "",  false);
+                                        ObjectStorageUtil.saveObject(getApplicationContext(), "user_data.json", userModel);
 //                                        String userId = myRef.push().getKey();
 //                                        userModel.setId(userId);
                                         myRef.child(user.getUid()).setValue(userModel, new DatabaseReference.CompletionListener() {
