@@ -1,4 +1,4 @@
-package com.example.prm392_group3.activities.profile;
+package com.example.prm392_group3.adapters;
 import com.example.prm392_group3.R;
 import android.content.Context;
 import android.content.Intent;

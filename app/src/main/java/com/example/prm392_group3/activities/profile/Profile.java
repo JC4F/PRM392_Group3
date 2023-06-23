@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.prm392_group3.R;
+import com.example.prm392_group3.adapters.ProfileAdapter;
 import com.example.prm392_group3.models.OptionItem;
 
 import java.util.ArrayList;
