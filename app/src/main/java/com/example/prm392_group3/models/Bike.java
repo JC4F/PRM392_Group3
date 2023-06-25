@@ -1,6 +1,8 @@
 package com.example.prm392_group3.models;
 
-public class Bike {
+import java.io.Serializable;
+
+public class Bike implements Serializable {
     String id, name, description, imageUrl;
     float pricePerHour;
     boolean isAvailable;
