@@ -1,4 +1,4 @@
-package com.example.prm392_group3.activities.orders.orders;
+package com.example.prm392_group3.activities.orders;
 
 public class Order {
     private String resourceID;

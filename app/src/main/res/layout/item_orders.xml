@@ -6,15 +6,14 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="274dp"
+        android:layout_height="310dp"
         tools:ignore="MissingConstraints">
-
 
         <RelativeLayout
             android:id="@+id/relativeLayout3"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_width="248dp"
+            android:layout_height="298dp"
             android:background="@drawable/rounded_rectangle_bg"
             android:backgroundTint="#DACFCF"
             android:elevation="8dp">
@@ -34,10 +33,10 @@
                 android:id="@+id/bikeName"
                 android:layout_width="170dp"
                 android:layout_height="wrap_content"
-                android:layout_above="@id/bookID"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="9dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="19dp"
                 android:text="BikeNameGoHere"
                 android:textColor="#5E5954"
                 android:textSize="16sp"
@@ -47,10 +46,10 @@
                 android:id="@+id/bookID"
                 android:layout_width="169dp"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="197dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="20dp"
                 android:text="#QTE1401KDA"
                 android:textColor="#7C6E5D"
                 android:textSize="12sp" />
@@ -59,7 +58,7 @@
                 android:id="@+id/linearLayout05"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="65dp"
                 android:orientation="horizontal">
 
@@ -70,57 +69,83 @@
                     android:background="#914B4B" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/totalPriceTextView"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/endDateTextView"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="3dp"
-                android:text="#Price Per Hour: $15"
-                android:textColor="#7C6E5D"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/endDateTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/startDateTextView"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"
-                android:text="#End Date: 05/06/2021 12:47:53"
-                android:textColor="#7C6E5D"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                <ImageView
+                    android:id="@+id/imageProduct"
+                    android:layout_width="225dp"
+                    android:layout_height="95dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="75dp"
+                    android:layout_marginBottom="15dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/default_avatar" />
 
-            <TextView
-                android:id="@+id/startDateTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/bikeName"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="146dp"
-                android:text="#Start Date: 05/06/2021 12:47:53"
-                android:textColor="#7C6E5D"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/customerName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:text="#Customer: $15"
+                    android:textColor="#7C6E5D"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/imageProduct"
-                android:layout_width="225dp"
-                android:layout_height="95dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="75dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/default_avatar" />
+                <TextView
+                    android:id="@+id/totalPriceTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:text="#Price Per Hour: $15"
+                    android:textColor="#7C6E5D"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/startDateTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:text="#Start Date: 05/06/2021 12:47:53"
+                    android:textColor="#7C6E5D"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/endDateTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:text="#End Date: 05/06/2021 12:47:53"
+                    android:textColor="#7C6E5D"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/bookingStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:text="#Status: Pending"
+                    android:textColor="#7C6E5D"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/relativeLayout2"
             android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_height="296dp"
             android:layout_marginLeft="-245dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/rounded_rectangle"
