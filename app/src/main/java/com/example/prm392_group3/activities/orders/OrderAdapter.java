@@ -1,4 +1,4 @@
-package com.example.prm392_group3.activities.orders.orders;
+package com.example.prm392_group3.activities.orders;
 
 import android.view.LayoutInflater;
 import android.view.View;
