@@ -15,10 +15,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prm392_group3.R;
 import com.example.prm392_group3.activities.store.AddOrUpddateBike;
+import com.example.prm392_group3.activities.store.BikeDetail;
 import com.example.prm392_group3.models.Bike;
 import com.example.prm392_group3.models.User;
 import com.example.prm392_group3.utils.ObjectStorageUtil;
@@ -41,6 +43,7 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
     AppCompatButton updateBtn;
     AppCompatButton deleteBtn;
     AppCompatButton bookingBtn;
+    ConstraintLayout bikeItemHolder;
 
     public BikeAdapter(Context context, List<Bike> bikeList, int commentCount, List<Integer> ratingList) {
         this.context = context;
@@ -59,8 +62,9 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
         myRef = FirebaseDatabase.getInstance().getReference("Bike");
 
         updateBtn = view.findViewById(R.id.user_update_btn);
-        deleteBtn = view.findViewById(R.id.user_band_btn);
-        bookingBtn = view.findViewById(R.id.user_detail_btn);
+        deleteBtn = view.findViewById(R.id.user_delete_btn);
+        bookingBtn = view.findViewById(R.id.user_book_btn);
+        bikeItemHolder = view.findViewById(R.id.bike_item_holder);
 
         if (userDetails!=null && !userDetails.isRole()){
             updateBtn.setVisibility(View.GONE);
@@ -99,6 +103,15 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
             public void onClick(View view) {
                 // Hiển thị hộp thoại xác nhận xóa
                 showDeleteConfirmationDialog(bike);
+            }
+        });
+
+        bikeItemHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, BikeDetail.class);
+                intent.putExtra("Bike", bike);
+                context.startActivity(intent);
             }
         });
     }
