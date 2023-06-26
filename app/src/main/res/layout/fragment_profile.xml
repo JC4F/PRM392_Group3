@@ -38,7 +38,7 @@
 
 
             <TextView
-                android:id="@+id/nameText"
+                android:id="@+id/txtName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -46,7 +46,7 @@
                 android:text="John Doe"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@id/userIdText"
+                app:layout_constraintBottom_toTopOf="@id/txtEmail"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/avatarImage"
@@ -54,7 +54,7 @@
                 app:layout_constraintVertical_chainStyle="packed" />
 
             <TextView
-                android:id="@+id/userIdText"
+                android:id="@+id/txtEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -66,7 +66,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/avatarImage"
-                app:layout_constraintTop_toBottomOf="@id/nameText" />
+                app:layout_constraintTop_toBottomOf="@id/txtName" />
 
             <TextView
                 android:id="@+id/editProfileText"
@@ -84,7 +84,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/avatarImage"
-                app:layout_constraintTop_toBottomOf="@id/userIdText" />
+                app:layout_constraintTop_toBottomOf="@id/txtEmail" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
