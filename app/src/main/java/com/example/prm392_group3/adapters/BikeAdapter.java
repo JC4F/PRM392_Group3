@@ -58,9 +58,9 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
 
         myRef = FirebaseDatabase.getInstance().getReference("Bike");
 
-        updateBtn = view.findViewById(R.id.store_update_btn);
-        deleteBtn = view.findViewById(R.id.store_delete_btn);
-        bookingBtn = view.findViewById(R.id.store_book_btn);
+        updateBtn = view.findViewById(R.id.user_update_btn);
+        deleteBtn = view.findViewById(R.id.user_band_btn);
+        bookingBtn = view.findViewById(R.id.user_detail_btn);
 
         if (userDetails!=null && !userDetails.isRole()){
             updateBtn.setVisibility(View.GONE);
@@ -172,12 +172,12 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            bikeImage = itemView.findViewById(R.id.store_item_image);
-            bikeName = itemView.findViewById(R.id.store_bike_name);
-            remainQuantity = itemView.findViewById(R.id.store_bike_remain_quantity);
-            ratingsCount = itemView.findViewById(R.id.store_ratings_count);
-            commentsCount = itemView.findViewById(R.id.store_comments_count);
-            bikeStatus = itemView.findViewById(R.id.store_bike_status);
+            bikeImage = itemView.findViewById(R.id.user_item_image);
+            bikeName = itemView.findViewById(R.id.user_userName);
+            remainQuantity = itemView.findViewById(R.id.user_gmail);
+            ratingsCount = itemView.findViewById(R.id.user_phone);
+            commentsCount = itemView.findViewById(R.id.user_row);
+            bikeStatus = itemView.findViewById(R.id.user_status);
         }
     }
 }
