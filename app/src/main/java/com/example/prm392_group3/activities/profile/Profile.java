@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.prm392_group3.R;
+import com.example.prm392_group3.adapters.ProfileAdapter;
 import com.example.prm392_group3.models.OptionItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.*;
