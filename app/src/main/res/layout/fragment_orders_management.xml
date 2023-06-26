@@ -31,287 +31,332 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/mainContent"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="625dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/UpperTitle"
-            android:layout_width="0dp"
-            android:layout_height="88dp"
-            android:layout_marginTop="4dp"
-            android:padding="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/MainIcon"
-                android:layout_width="0dp"
-                android:layout_height="57dp"
-                android:layout_marginEnd="16dp"
-                android:src="@drawable/inventory"
-                app:civ_border_color="#C5B7B7"
-                app:civ_border_width="1dp"
-                app:layout_constraintEnd_toStartOf="@+id/LineStraight01"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:id="@+id/MainTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
-                android:text="Orders Tracker"
-                android:textColor="#1C1B1B"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/MainIcon"
-                app:layout_constraintStart_toStartOf="@+id/LineStraight01"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/SubMainText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
-                android:text="Upcoming"
-                android:textColor="#0B0B0B"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/LineStraight01"
-                app:layout_constraintTop_toBottomOf="@+id/MainTextView" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/LineStraight01"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="82dp" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/LineStraight02"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.77" />
-
-            <androidx.constraintlayout.widget.Barrier
-                android:id="@+id/Barrier"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:barrierDirection="left"
-                app:constraint_referenced_ids="LineStraight01,LineStraight02" />
-
-            <ImageView
-                android:id="@+id/SearchIcon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/search"
-                app:layout_constraintStart_toStartOf="@+id/LineStraight02"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="iconSearchImage"/>
-
-            <ImageView
-                android:id="@+id/FilterIcon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/filter"
-                app:layout_constraintStart_toEndOf="@+id/SearchIcon"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="filterIconImage"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <HorizontalScrollView
-            android:id="@+id/horizontalScrollView2"
+            android:id="@+id/mainContent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/UpperTitle">
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/UpperTitle"
+                android:layout_width="0dp"
+                android:layout_height="88dp"
+                android:layout_marginTop="4dp"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/MainIcon"
+                    android:layout_width="0dp"
+                    android:layout_height="57dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/inventory"
+                    app:civ_border_color="#C5B7B7"
+                    app:civ_border_width="1dp"
+                    app:layout_constraintEnd_toStartOf="@+id/LineStraight01"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/MainTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="4dp"
+                    android:text="Orders Tracker"
+                    android:textColor="#1C1B1B"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/MainIcon"
+                    app:layout_constraintStart_toStartOf="@+id/LineStraight01"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/SubMainText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="4dp"
+                    android:text="Upcoming"
+                    android:textColor="#0B0B0B"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@+id/LineStraight01"
+                    app:layout_constraintTop_toBottomOf="@+id/MainTextView" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/LineStraight01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="82dp" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/LineStraight02"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.77" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/Barrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="left"
+                    app:constraint_referenced_ids="LineStraight01,LineStraight02" />
+
+                <ImageView
+                    android:id="@+id/SearchIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/search"
+                    app:layout_constraintStart_toStartOf="@+id/LineStraight02"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/FilterIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/filter"
+                    app:layout_constraintStart_toEndOf="@+id/SearchIcon"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/UpperTitle">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginBottom="14dp"
+                        android:background="@android:color/transparent"
+                        android:backgroundTint="#E4E2E2"
+                        android:foreground="@drawable/rounded_border"
+                        android:outlineProvider="none"
+                        android:text="All Orders"
+                        android:textColor="#171616" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginBottom="14dp"
+                        android:background="@android:color/transparent"
+                        android:backgroundTint="#E4E2E2"
+                        android:foreground="@drawable/rounded_border"
+                        android:outlineProvider="none"
+                        android:text="Pending"
+                        android:textColor="#171616" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginBottom="14dp"
+                        android:background="@android:color/transparent"
+                        android:backgroundTint="#E4E2E2"
+                        android:foreground="@drawable/rounded_border"
+                        android:outlineProvider="none"
+                        android:text="Process"
+                        android:textColor="#171616" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginBottom="14dp"
+                        android:background="@android:color/transparent"
+                        android:backgroundTint="#E4E2E2"
+                        android:foreground="@drawable/rounded_border"
+                        android:outlineProvider="none"
+                        android:text="Completed"
+                        android:textColor="#171616" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
 
             <LinearLayout
+                android:id="@+id/LinearStraight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginEnd="14dp"
-                    android:layout_marginBottom="14dp"
-                    android:background="@android:color/transparent"
-                    android:backgroundTint="#E4E2E2"
-                    android:foreground="@drawable/rounded_border"
-                    android:outlineProvider="none"
-                    android:text="All Orders"
-                    android:textColor="#171616" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginEnd="14dp"
-                    android:layout_marginBottom="14dp"
-                    android:background="@android:color/transparent"
-                    android:backgroundTint="#E4E2E2"
-                    android:foreground="@drawable/rounded_border"
-                    android:outlineProvider="none"
-                    android:text="Pending"
-                    android:textColor="#171616" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginEnd="14dp"
-                    android:layout_marginBottom="14dp"
-                    android:background="@android:color/transparent"
-                    android:backgroundTint="#E4E2E2"
-                    android:foreground="@drawable/rounded_border"
-                    android:outlineProvider="none"
-                    android:text="Process"
-                    android:textColor="#171616" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginEnd="14dp"
-                    android:layout_marginBottom="14dp"
-                    android:background="@android:color/transparent"
-                    android:backgroundTint="#E4E2E2"
-                    android:foreground="@drawable/rounded_border"
-                    android:outlineProvider="none"
-                    android:text="Completed"
-                    android:textColor="#171616" />
+                android:layout_marginTop="200dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints">
 
                 <View
+                    android:id="@+id/view"
+                    android:layout_width="350dp"
+                    android:layout_height="2dp"
+                    android:background="#000000"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearAchivement"
+                android:layout_width="350dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="400dp"
+                android:background="@drawable/rounded_rectangle_bg"
+                android:backgroundTint="#DACFCF"
+                android:elevation="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.491"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/LinearStraight"
+                app:layout_constraintVertical_bias="0.0">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/tracking" />
+
+                <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/topReward"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="A great performance you are!"
+                        android:textColor="#5E5954"
+                        android:textColorHighlight="#C16C6C"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/bottomReward"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="There are 112 orders had been make out in this month!"
+                        android:textColor="#7C6E5D"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
 
             </LinearLayout>
-        </HorizontalScrollView>
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="200dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints">
-
-            <View
-                android:id="@+id/view"
-                android:layout_width="350dp"
-                android:layout_height="2dp"
-                android:background="#000000"
+            <LinearLayout
+                android:id="@+id/linearRecent"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="400dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearlayout1"
-            android:layout_width="350dp"
-            android:layout_height="75dp"
-            android:layout_marginTop="36dp"
-            android:layout_marginBottom="400dp"
-            android:background="@drawable/rounded_rectangle_bg"
-            android:backgroundTint="#DACFCF"
-            android:elevation="8dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="14dp"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/tracking"
-                android:contentDescription="imageIcon"/>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                app:layout_constraintTop_toBottomOf="@+id/linearAchivement">
 
                 <TextView
-                    android:id="@+id/topReward"
+                    android:id="@+id/textRecentOrders"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="A great performance you are!"
-                    android:textColor="#5E5954"
-                    android:textColorHighlight="#C16C6C"
+                    android:layout_marginStart="10dp"
+                    android:text="Recent Orders"
+                    android:textColor="#000000"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
                 <TextView
-                    android:id="@+id/bottomReward"
+                    android:id="@+id/textViewAll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="There are 112 orders had been make out in this month!"
-                    android:textColor="#7C6E5D"
-                    android:textSize="10sp"
-                    tools:ignore="SmallSp" />
+                    android:layout_marginRight="10dp"
+                    android:text="View All"
+                    android:textColor="#575FE4"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
-        </LinearLayout>
-
-        <View
-            android:id="@+id/view3"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#00000000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.513" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/view3">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+            <View
+                android:id="@+id/ViewGuideLine"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp" />
+                android:layout_height="2dp"
+                android:background="#00000000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.47" />
 
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:id="@+id/LinearRecycler"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ViewGuideLine">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp" />
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </FrameLayout>
