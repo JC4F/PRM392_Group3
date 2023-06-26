@@ -1,10 +1,10 @@
 package com.example.prm392_group3.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.prm392_group3.R;
 import com.example.prm392_group3.activities.authen.Login;
@@ -14,15 +14,18 @@ import com.example.prm392_group3.activities.home.Home;
 import com.example.prm392_group3.activities.orders.ordersManagement;
 import com.example.prm392_group3.activities.profile.Profile;
 import com.example.prm392_group3.activities.store.Store;
+import com.example.prm392_group3.models.User;
+import com.example.prm392_group3.utils.ObjectStorageUtil;
+import com.example.prm392_group3.utils.UserUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
-
     private ChipNavigationBar chipNavigationBar;
     private Fragment fragment = null;
+    User userData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         // Lấy thông tin người dùng đã đăng nhập
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user == null) {
+            ObjectStorageUtil.deleteObject(this, "user_data.json");
             Intent intent = new Intent(MainActivity.this, Login.class);
             startActivity(intent);
             finish();

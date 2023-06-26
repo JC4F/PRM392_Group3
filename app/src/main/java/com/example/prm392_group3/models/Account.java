@@ -8,28 +8,33 @@ public class Account {
 
     private int avatar;
 
+    private String phone;
 
 
     public Account() {
     }
-    public Account(int avatar, String email, String role) {
+    public Account(int avatar, String email, String role, String Phone) {
         this.avatar = avatar;
         this.email = email;
         this.role = role;
+        this.phone = phone;
     }
 
-    public Account(int accountID, String email, String password, String role) {
-        this.accountID = accountID;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
+
     public int getAvatar() {
         return avatar;
     }
 
     public void setAvatar(int avatar) {
         this.avatar = avatar;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public int getAccountID() {
