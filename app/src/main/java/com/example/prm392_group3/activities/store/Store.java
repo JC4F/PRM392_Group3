@@ -43,7 +43,6 @@ public class Store extends Fragment {
     User userDetails;
     DatabaseReference myRef;
     private List<Bike> bikeList;
-    private int commentCount;
     private List<Integer> ratingList;
     BikeAdapter bikeAdapter;
     EditText editTextSearch;
@@ -82,7 +81,6 @@ public class Store extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        commentCount = 0;
         bikeList = new ArrayList<>();
         ratingList = new ArrayList<>();
 
@@ -95,7 +93,7 @@ public class Store extends Fragment {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        bikeAdapter = new BikeAdapter(getContext(), bikeList, commentCount, ratingList);
+        bikeAdapter = new BikeAdapter(getContext(), bikeList, ratingList);
         recyclerView.setAdapter(bikeAdapter);
 
         myRef = FirebaseDatabase.getInstance().getReference("Bike");

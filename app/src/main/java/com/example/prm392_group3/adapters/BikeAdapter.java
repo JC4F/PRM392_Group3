@@ -34,7 +34,6 @@ import java.util.List;
 public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
 
     private List<Bike> bikeList;
-    private int commentCount;
     private List<Integer> ratingList;
     private Context context;
     DatabaseReference myRef;
@@ -45,10 +44,9 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
     AppCompatButton bookingBtn;
     ConstraintLayout bikeItemHolder;
 
-    public BikeAdapter(Context context, List<Bike> bikeList, int commentCount, List<Integer> ratingList) {
+    public BikeAdapter(Context context, List<Bike> bikeList, List<Integer> ratingList) {
         this.context = context;
         this.bikeList = bikeList;
-        this.commentCount = commentCount;
         this.ratingList = ratingList;
         this.userDetails = ObjectStorageUtil.loadObject(context, "user_data.json", User.class);
     }
@@ -85,7 +83,6 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
         holder.bikeName.setText(bike.getName());
         holder.remainQuantity.setText("Remain quantity: " + bike.getQuantity());
         holder.ratingsCount.setText(String.format("%.1f (%d ratings)", calculateAverageRating(), ratingList.size()));
-        holder.commentsCount.setText(String.valueOf(commentCount));
         holder.bikeStatus.setText(bike.isAvailable() ? "Available" : "Unavailable");
 
         updateBtn.setOnClickListener(new View.OnClickListener() {
@@ -180,7 +177,6 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
         TextView bikeName;
         TextView remainQuantity;
         TextView ratingsCount;
-        TextView commentsCount;
         TextView bikeStatus;
 
         public ViewHolder(@NonNull View itemView) {
@@ -189,7 +185,6 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
             bikeName = itemView.findViewById(R.id.user_userName);
             remainQuantity = itemView.findViewById(R.id.user_gmail);
             ratingsCount = itemView.findViewById(R.id.user_phone);
-            commentsCount = itemView.findViewById(R.id.user_row);
             bikeStatus = itemView.findViewById(R.id.user_status);
         }
     }
