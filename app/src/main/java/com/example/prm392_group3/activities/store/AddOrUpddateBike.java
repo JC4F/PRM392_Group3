@@ -52,7 +52,6 @@ public class AddOrUpddateBike extends AppCompatActivity {
         imageUrlEditText = findViewById(R.id.au_bike_image_url);
         pricePerHourEditText = findViewById(R.id.au_bike_pricePerHour);
         quantityEditText = findViewById(R.id.au_bike_quantity);
-        availableCheckBox = findViewById(R.id.au_bike_checkbox_available);
 
         if (bike != null) {
             toolbarTitle.setText("Update Bike");
@@ -61,7 +60,6 @@ public class AddOrUpddateBike extends AppCompatActivity {
             imageUrlEditText.setText(bike.getImageUrl());
             pricePerHourEditText.setText(String.valueOf(bike.getPricePerHour()));
             quantityEditText.setText(String.valueOf(bike.getQuantity()));
-            availableCheckBox.setChecked(bike.isAvailable());
             addOrUpateButton.setText("Save Bike");
         }
 
@@ -81,7 +79,6 @@ public class AddOrUpddateBike extends AppCompatActivity {
                 String imageUrl = imageUrlEditText.getText().toString();
                 String pricePerHourString = pricePerHourEditText.getText().toString();
                 String quantityString = quantityEditText.getText().toString();
-                boolean isAvailable = availableCheckBox.isChecked();
 
                 // Kiểm tra dữ liệu không được trống
                 if (TextUtils.isEmpty(bikeName) || TextUtils.isEmpty(bikeDescription) ||
@@ -104,11 +101,11 @@ public class AddOrUpddateBike extends AppCompatActivity {
 
                 if (bike != null) {
                     // Đây là bước cập nhật (update)
-                    newBike = new Bike(bike.getId(), bikeName, bikeDescription, imageUrl, pricePerHour, isAvailable, quantity);
+                    newBike = new Bike(bike.getId(), bikeName, bikeDescription, imageUrl, pricePerHour, quantity);
                     bikeId = bike.getId();
                 } else {
                     // Đây là bước thêm mới (add)
-                    newBike = new Bike("", bikeName, bikeDescription, imageUrl, pricePerHour, isAvailable, quantity);
+                    newBike = new Bike("", bikeName, bikeDescription, imageUrl, pricePerHour, quantity);
                     bikeId = myRef.push().getKey();
                     newBike.setId(bikeId);
                 }

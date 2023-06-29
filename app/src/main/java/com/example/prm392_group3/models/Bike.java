@@ -5,19 +5,17 @@ import java.io.Serializable;
 public class Bike implements Serializable {
     String id, name, description, imageUrl;
     float pricePerHour;
-    boolean isAvailable;
     int quantity;
 
     public Bike() {
     }
 
-    public Bike(String id, String name, String description, String imageUrl, float pricePerHour, boolean isAvailable, int quantity) {
+    public Bike(String id, String name, String description, String imageUrl, float pricePerHour, int quantity) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.imageUrl = imageUrl;
         this.pricePerHour = pricePerHour;
-        this.isAvailable = isAvailable;
         this.quantity = quantity;
     }
 
@@ -59,14 +57,6 @@ public class Bike implements Serializable {
 
     public void setPricePerHour(float pricePerHour) {
         this.pricePerHour = pricePerHour;
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public void setAvailable(boolean available) {
-        isAvailable = available;
     }
 
     public int getQuantity() {

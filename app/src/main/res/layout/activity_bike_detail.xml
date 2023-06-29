@@ -87,15 +87,6 @@
                     android:text="Price"
                     android:textColor="@color/app_black" />
 
-                <!-- Hiển thị trạng thái có sẵn hay không -->
-                <TextView
-                    android:id="@+id/bikedt_ability"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Ability"
-                    android:textColor="@color/app_black" />
-
                 <!-- Hiển thị số lượng -->
                 <TextView
                     android:id="@+id/bike_quantity"
@@ -196,32 +187,61 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <ProgressBar
+                android:id="@+id/bikedt_pb_rating"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bikedt_tv_ratings" />
+
             <RatingBar
                 android:id="@+id/bikedt_rating"
                 android:layout_width="234dp"
                 android:layout_height="57dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="28dp"
                 android:contentDescription="Rating Bike"
                 android:rating="0"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.883"
                 app:layout_constraintStart_toStartOf="@id/bikedt_tv_ratings"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="invisible"/>
 
-            <EditText
-                android:id="@+id/bikedt_ratings_description"
-                android:layout_width="0dp"
+            <!-- Edit text for bike description -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/bikedt_ratings_description_layout"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:hint="Enter your description"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:hint="Enter Bike Description"
+                android:padding="5dp"
                 android:textColorHint="@color/app_black"
-                android:inputType="textMultiLine"
-                android:minLines="3"
-                android:maxLines="5"
-                android:textColor="@color/app_black"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/bikedt_rating" />
+                app:boxStrokeColor="@color/purple_200"
+                app:hintTextColor="@color/app_black"
+                app:layout_constraintTop_toBottomOf="@id/bikedt_rating"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/bikedt_ratings_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:lines="4"
+                    android:maxLines="10"
+                    android:scrollbars="vertical"
+                    android:textColor="@color/app_black"
+                    android:textColorHint="@color/app_black"
+                    android:textSize="14sp"
+                    app:boxStrokeColor="@color/purple_200"
+                    android:visibility="invisible"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/bikedt_submit_button"
@@ -232,7 +252,8 @@
                 android:text="Submit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/bikedt_ratings_description" />
+                app:layout_constraintTop_toBottomOf="@id/bikedt_ratings_description_layout"
+                android:visibility="gone"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

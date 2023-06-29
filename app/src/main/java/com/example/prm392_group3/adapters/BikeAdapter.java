@@ -83,7 +83,6 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
         holder.bikeName.setText(bike.getName());
         holder.remainQuantity.setText("Remain quantity: " + bike.getQuantity());
         holder.ratingsCount.setText(String.format("%.1f (%d ratings)", calculateAverageRating(), ratingList.size()));
-        holder.bikeStatus.setText(bike.isAvailable() ? "Available" : "Unavailable");
 
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,7 +176,6 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
         TextView bikeName;
         TextView remainQuantity;
         TextView ratingsCount;
-        TextView bikeStatus;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -185,7 +183,6 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
             bikeName = itemView.findViewById(R.id.user_userName);
             remainQuantity = itemView.findViewById(R.id.user_gmail);
             ratingsCount = itemView.findViewById(R.id.user_phone);
-            bikeStatus = itemView.findViewById(R.id.user_status);
         }
     }
 }
