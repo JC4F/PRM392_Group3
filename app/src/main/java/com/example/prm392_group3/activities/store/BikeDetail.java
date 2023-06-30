@@ -6,6 +6,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -16,8 +18,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prm392_group3.R;
+import com.example.prm392_group3.adapters.RatingAdapter;
 import com.example.prm392_group3.models.Bike;
 import com.example.prm392_group3.models.Rating;
 import com.example.prm392_group3.models.User;
@@ -34,11 +39,17 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class BikeDetail extends AppCompatActivity {
-
+    private static final int PAGE_SIZE = 2;
+    private int countLoadMore = -1;
+    private String lastRatingKey;
     DatabaseReference bikeRef;
     DatabaseReference ratingRef;
     User userDetails;
@@ -59,6 +70,11 @@ public class BikeDetail extends AppCompatActivity {
     private ProgressBar pbLoadMore;
     private ProgressBar pbRating;
     private Rating myRating;
+    private List<Rating> ratingList;
+    private RatingAdapter ratingAdapter;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
+    boolean isFirstKey = false;
 
 
     @Override
@@ -69,6 +85,12 @@ public class BikeDetail extends AppCompatActivity {
         userDetails = ObjectStorageUtil.loadObject(getApplicationContext(), "user_data.json", User.class);
         bikeRef = FirebaseDatabase.getInstance().getReference("Bike");
         ratingRef = FirebaseDatabase.getInstance().getReference("Rating");
+        ratingList = new ArrayList<>();
+        ratingAdapter = new RatingAdapter(this, ratingList);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView = findViewById(R.id.bikedt_rcv_rating);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(ratingAdapter);
 
         // Ánh xạ các phần tử giao diện
         nameTextView = findViewById(R.id.bikedt_name);
@@ -109,7 +131,6 @@ public class BikeDetail extends AppCompatActivity {
 
         Query query = ratingRef.orderByChild("bikeId").equalTo(bike.getId());
 
-
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -147,6 +168,8 @@ public class BikeDetail extends AppCompatActivity {
                 // Xử lý khi có lỗi xảy ra
             }
         });
+
+        getInitialRatings();
 
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -250,6 +273,14 @@ public class BikeDetail extends AppCompatActivity {
             }
         });
 
+        loadMoreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadMoreRatings(false);
+            }
+        });
+
+
     }
 
     private void showDeleteConfirmationDialog(Bike bike) {
@@ -294,4 +325,91 @@ public class BikeDetail extends AppCompatActivity {
             }
         });
     }
+
+    private void processUserRating(Rating rating, String userId) {
+        // Truy vấn Firebase Realtime Database để lấy thông tin User tương ứng
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("User").child(userId);
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    User user = dataSnapshot.getValue(User.class);
+                    rating.setUser(user); // Thiết lập thông tin User vào model Rating
+                }
+
+                ratingList.add(countLoadMore * PAGE_SIZE, rating);
+                if (!isFirstKey) {
+                    isFirstKey = true;
+                    lastRatingKey = rating.getRatingId();
+                }
+                ratingAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Xử lý khi có lỗi xảy ra trong việc lấy thông tin User
+            }
+        });
+    }
+
+    private void getInitialRatings() {
+        loadMoreRatings(true);
+
+    }
+
+    private void loadMoreRatings(boolean isIntit) {
+        if (lastRatingKey == null && !isIntit) {
+            loadMoreBtn.setVisibility(View.GONE);
+            return;
+        }
+        Query query;
+
+        pbLoadMore.setVisibility(View.VISIBLE);
+
+        if (isIntit) {
+            query = ratingRef.orderByKey().limitToLast(PAGE_SIZE + 1);
+        } else {
+            query = ratingRef.orderByKey().endBefore(lastRatingKey).limitToLast(PAGE_SIZE + 1);
+        }
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    boolean isFirstChecking = false;
+                    isFirstKey = false;
+                    countLoadMore++;
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Rating rating = snapshot.getValue(Rating.class);
+                        // Lấy userId từ model Rating
+                        String userId = rating.getUserId();
+
+                        if (isFirstChecking || dataSnapshot.getChildrenCount() < PAGE_SIZE + 1) {
+                            processUserRating(rating, userId);
+                        }
+
+                        isFirstChecking = true;
+
+                        if (dataSnapshot.getChildrenCount() == PAGE_SIZE + 1) {
+                            loadMoreBtn.setVisibility(View.VISIBLE);
+                        } else {
+                            lastRatingKey = null;
+                            loadMoreBtn.setVisibility(View.GONE);
+                        }
+                    }
+                } else {
+                    lastRatingKey = null;
+                    loadMoreBtn.setVisibility(View.GONE);
+                }
+                pbLoadMore.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Xử lý khi có lỗi xảy ra
+            }
+        });
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package com.example.prm392_group3.adapters;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
@@ -33,7 +34,9 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     @NonNull
     @Override
     public RatingAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        // Inflate layout cho mỗi item trong danh sách
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bike_rating_item, parent, false);
+        return new RatingAdapter.ViewHolder(view);
     }
 
     @Override
@@ -41,9 +44,9 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         Rating rating = ratingList.get(position);
 
         // Set data for the views in the ViewHolder
-        Picasso.get().load(rating.getUser().getAvatarURL()).into(holder.ratingAccImage);
+        Picasso.get().load(rating.getUser().getAvatarURL().equals("")?"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCO2sR3EtGqpIpIa-GTVnvdrDHu0WxuzpA8g&usqp=CAU":rating.getUser().getAvatarURL()).into(holder.ratingAccImage);
         // Set data for the views in the ViewHolder
-        holder.ratingAccName.setText(rating.getUser().getUsername());
+        holder.ratingAccName.setText(rating.getUser().getUsername().equals("")?rating.getUser().getEmail():rating.getUser().getUsername());
         holder.ratingBar.setRating(rating.getRating());
         holder.tvNumRating.setText(String.valueOf(rating.getRating()));
         holder.description.setText(rating.getDescription());
