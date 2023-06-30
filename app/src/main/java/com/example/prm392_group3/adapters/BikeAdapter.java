@@ -19,23 +19,30 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prm392_group3.R;
+import com.example.prm392_group3.activities.orders.Order;
 import com.example.prm392_group3.activities.store.AddOrUpddateBike;
 import com.example.prm392_group3.activities.store.BikeDetail;
 import com.example.prm392_group3.models.Bike;
 import com.example.prm392_group3.models.User;
 import com.example.prm392_group3.utils.ObjectStorageUtil;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
 
     private List<Bike> bikeList;
     private Context context;
-    DatabaseReference myRef;
+    DatabaseReference bikeRef;
+    DatabaseReference bookingRef;
 
     User userDetails;
     AppCompatButton updateBtn;
@@ -55,7 +62,8 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
         // Inflate layout cho mỗi item trong danh sách
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_bike_item, parent, false);
 
-        myRef = FirebaseDatabase.getInstance().getReference("Bike");
+        bikeRef = FirebaseDatabase.getInstance().getReference("Bike");
+        bookingRef = FirebaseDatabase.getInstance().getReference("Book");
 
         updateBtn = view.findViewById(R.id.user_update_btn);
         deleteBtn = view.findViewById(R.id.user_delete_btn);
@@ -97,6 +105,13 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
             public void onClick(View view) {
                 // Hiển thị hộp thoại xác nhận xóa
                 showDeleteConfirmationDialog(bike);
+            }
+        });
+
+        bookingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handleBooking(bike);
             }
         });
 
@@ -146,7 +161,7 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
 
         loadingProgressBar.setVisibility(View.VISIBLE);
 
-        myRef.child(bikeId).removeValue(new DatabaseReference.CompletionListener() {
+        bikeRef.child(bikeId).removeValue(new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 loadingProgressBar.setVisibility(View.GONE);
@@ -162,7 +177,57 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
         });
     }
 
+    private void handleBooking(Bike bike) {
+        String bookingId = bookingRef.push().getKey();
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String startDateString = sdf.format(new Date()); // Ngày bắt đầu (dạng "dd/MM/yyyy HH:mm:ss")
+
+        try {
+            Date startDate = sdf.parse(startDateString);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(startDate);
+            calendar.add(Calendar.DAY_OF_MONTH, 3);
+            Date endDate = calendar.getTime();
+
+            String endDateString = sdf.format(endDate);
+
+            String userId = userDetails.getId();
+
+            float pricePerHour = bike.getPricePerHour();
+            long milliseconds = endDate.getTime() - startDate.getTime();
+            long hours = milliseconds / (60 * 60 * 1000);
+            float totalPrice =  (pricePerHour * hours);
+
+            Order booking = new Order();
+            booking.setBookID(bookingId);
+            booking.setBikeID(bike.getId());
+            booking.setBookingStatus("Pending");
+            booking.setUserID(userId);
+            booking.setBikeName(bike.getName());
+            booking.setStartDate(startDateString);
+            booking.setEndDate(endDateString);
+            booking.setTotalPrice(totalPrice);
+
+            // Lưu đối tượng Booking vào Firebase Realtime Database
+            bookingRef.child(bookingId).setValue(booking)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(context, "Booking successful!", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(context, "Booking failed. Please try again.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public int getItemCount() {

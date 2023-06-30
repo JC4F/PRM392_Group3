@@ -128,7 +128,7 @@ public class ordersManagement extends Fragment {
                     String bookKey = bookSnapshot.getKey();
                     if (bookKey != null) {
                         Order order = new Order();
-                        String bikeID = bookSnapshot.child("BikeID").getValue(String.class);
+                        String bikeID = bookSnapshot.child("bikeID").getValue(String.class);
                         DatabaseReference bikeRef = FirebaseDatabase.getInstance().getReference("Bike")
                                 .child(String.valueOf(bikeID));
 
@@ -154,13 +154,13 @@ public class ordersManagement extends Fragment {
                         });
 
                         //order.setResourceID(R.drawable.default_avatar);
-                        order.setBookID(bookSnapshot.child("BookingID").getValue(String.class));
+                        order.setBookID(bookSnapshot.child("bookID").getValue(String.class));
                         order.setBikeID(bikeID);
-                        order.setBookingStatus(bookSnapshot.child("BookingStatus").getValue(String.class));
-                        order.setEndDate(bookSnapshot.child("EndDateTime").getValue(String.class));
-                        order.setStartDate(bookSnapshot.child("StartDateTime").getValue(String.class));
-                        order.setTotalPrice(bookSnapshot.child("TotalPrice").getValue(Integer.class).intValue());
-                        order.setUserID(bookSnapshot.child("UserID").getValue(Integer.class).intValue());
+                        order.setBookingStatus(bookSnapshot.child("bookingStatus").getValue(String.class));
+                        order.setEndDate(bookSnapshot.child("endDate").getValue(String.class));
+                        order.setStartDate(bookSnapshot.child("startDate").getValue(String.class));
+                        order.setTotalPrice(bookSnapshot.child("totalPrice").getValue(Float.class).floatValue());
+                        order.setUserID(bookSnapshot.child("userID").getValue(String.class));
                         orders.add(order);
                     }
                 }

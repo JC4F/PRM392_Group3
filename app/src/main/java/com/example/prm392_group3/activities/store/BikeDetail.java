@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prm392_group3.R;
+import com.example.prm392_group3.activities.orders.Order;
 import com.example.prm392_group3.adapters.RatingAdapter;
 import com.example.prm392_group3.models.Bike;
 import com.example.prm392_group3.models.Rating;
@@ -40,6 +41,7 @@ import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -52,6 +54,7 @@ public class BikeDetail extends AppCompatActivity {
     private String lastRatingKey;
     DatabaseReference bikeRef;
     DatabaseReference ratingRef;
+    DatabaseReference bookingRef;
     User userDetails;
     private Bike bike;
     ImageView backButton;
@@ -86,6 +89,7 @@ public class BikeDetail extends AppCompatActivity {
         userDetails = ObjectStorageUtil.loadObject(getApplicationContext(), "user_data.json", User.class);
         bikeRef = FirebaseDatabase.getInstance().getReference("Bike");
         ratingRef = FirebaseDatabase.getInstance().getReference("Rating");
+        bookingRef = FirebaseDatabase.getInstance().getReference("Book");
         ratingList = new ArrayList<>();
         ratingAdapter = new RatingAdapter(this, ratingList);
         layoutManager = new LinearLayoutManager(this);
@@ -282,7 +286,64 @@ public class BikeDetail extends AppCompatActivity {
             }
         });
 
+        bookingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handleBooking(bike);
+            }
+        });
+    }
 
+    private void handleBooking(Bike bike) {
+        String bookingId = bookingRef.push().getKey();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String startDateString = sdf.format(new Date()); // Ngày bắt đầu (dạng "dd/MM/yyyy HH:mm:ss")
+
+        try {
+            Date startDate = sdf.parse(startDateString);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(startDate);
+            calendar.add(Calendar.DAY_OF_MONTH, 3);
+            Date endDate = calendar.getTime();
+
+            String endDateString = sdf.format(endDate);
+
+            String userId = userDetails.getId();
+
+            float pricePerHour = bike.getPricePerHour();
+            long milliseconds = endDate.getTime() - startDate.getTime();
+            long hours = milliseconds / (60 * 60 * 1000);
+            float totalPrice =  (pricePerHour * hours);
+
+            Order booking = new Order();
+            booking.setBookID(bookingId);
+            booking.setBikeID(bike.getId());
+            booking.setBookingStatus("Pending");
+            booking.setUserID(userId);
+            booking.setBikeName(bike.getName());
+            booking.setStartDate(startDateString);
+            booking.setEndDate(endDateString);
+            booking.setTotalPrice(totalPrice);
+
+            // Lưu đối tượng Booking vào Firebase Realtime Database
+            bookingRef.child(bookingId).setValue(booking)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(getApplicationContext(), "Booking successful!", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(), "Booking failed. Please try again.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void showDeleteConfirmationDialog(Bike bike) {
