@@ -271,6 +271,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bikedt_cs_rating_wrapper" />
 
+        <TextView
+            android:id="@+id/bikedt_tv_no_one_ratings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:padding="16dp"
+            android:text="Not rated yet"
+            android:textColor="@color/app_black"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bikedt_tv_list_ratings"
+            android:visibility="gone"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/bikedt_rcv_rating"
             android:layout_width="match_parent"

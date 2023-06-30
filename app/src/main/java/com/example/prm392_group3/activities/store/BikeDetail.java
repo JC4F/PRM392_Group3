@@ -70,6 +70,7 @@ public class BikeDetail extends AppCompatActivity {
     private ProgressBar pbLoadMore;
     private ProgressBar pbRating;
     private Rating myRating;
+    private TextView tvNotRating;
     private List<Rating> ratingList;
     private RatingAdapter ratingAdapter;
     private RecyclerView recyclerView;
@@ -108,6 +109,7 @@ public class BikeDetail extends AppCompatActivity {
         loadMoreBtn = findViewById(R.id.bikedt_loadmore_button);
         pbLoadMore = findViewById(R.id.bikedt_pb_loadmore);
         pbRating = findViewById(R.id.bikedt_pb_rating);
+        tvNotRating = findViewById(R.id.bikedt_tv_no_one_ratings);
 
         // Nhận dữ liệu Bike từ Intent
         bike = (Bike) getIntent().getSerializableExtra("Bike");
@@ -326,7 +328,7 @@ public class BikeDetail extends AppCompatActivity {
         });
     }
 
-    private void processUserRating(Rating rating, String userId) {
+    private void processUserRating(Rating rating, String userId, boolean isOverload) {
         // Truy vấn Firebase Realtime Database để lấy thông tin User tương ứng
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("User").child(userId);
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -342,7 +344,14 @@ public class BikeDetail extends AppCompatActivity {
                     isFirstKey = true;
                     lastRatingKey = rating.getRatingId();
                 }
+
+                if(isOverload){
+                    ratingList.remove(ratingList.size()-1);
+                    lastRatingKey = ratingList.get(ratingList.size()-1).getRatingId();
+                }
                 ratingAdapter.notifyDataSetChanged();
+
+//                recyclerView.scrollToPosition(ratingAdapter.getItemCount() - 1);
             }
 
             @Override
@@ -357,16 +366,16 @@ public class BikeDetail extends AppCompatActivity {
 
     }
 
-    private void loadMoreRatings(boolean isIntit) {
-        if (lastRatingKey == null && !isIntit) {
+    private void loadMoreRatings(boolean isInit) {
+        if (lastRatingKey == null && !isInit) {
             loadMoreBtn.setVisibility(View.GONE);
             return;
         }
-        Query query;
 
         pbLoadMore.setVisibility(View.VISIBLE);
 
-        if (isIntit) {
+        Query query;
+        if (isInit) {
             query = ratingRef.orderByKey().limitToLast(PAGE_SIZE + 1);
         } else {
             query = ratingRef.orderByKey().endBefore(lastRatingKey).limitToLast(PAGE_SIZE + 1);
@@ -376,31 +385,40 @@ public class BikeDetail extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    boolean isFirstChecking = false;
+                    int countSuitableData = 0;
                     isFirstKey = false;
                     countLoadMore++;
+
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Rating rating = snapshot.getValue(Rating.class);
-                        // Lấy userId từ model Rating
-                        String userId = rating.getUserId();
 
-                        if (isFirstChecking || dataSnapshot.getChildrenCount() < PAGE_SIZE + 1) {
-                            processUserRating(rating, userId);
-                        }
+                        // Kiểm tra bikeId và userId tương ứng
+                        if (rating != null && rating.getBikeId().equals(bike.getId())) {
+                            countSuitableData++;
 
-                        isFirstChecking = true;
+                            if(countSuitableData == PAGE_SIZE + 1){
+                                processUserRating(rating, userDetails.getId(), true);
+                            }
+                            else {
+                                processUserRating(rating, userDetails.getId(), false);
+                            }
 
-                        if (dataSnapshot.getChildrenCount() == PAGE_SIZE + 1) {
-                            loadMoreBtn.setVisibility(View.VISIBLE);
-                        } else {
-                            lastRatingKey = null;
-                            loadMoreBtn.setVisibility(View.GONE);
+                            if (countSuitableData == PAGE_SIZE + 1) {
+                                loadMoreBtn.setVisibility(View.VISIBLE);
+                            } else {
+                                lastRatingKey = null;
+                                loadMoreBtn.setVisibility(View.GONE);
+                            }
                         }
                     }
+                    
+                    if(countSuitableData==0) tvNotRating.setVisibility(View.VISIBLE);
                 } else {
                     lastRatingKey = null;
                     loadMoreBtn.setVisibility(View.GONE);
+                    tvNotRating.setVisibility(View.VISIBLE);
                 }
+
                 pbLoadMore.setVisibility(View.GONE);
             }
 

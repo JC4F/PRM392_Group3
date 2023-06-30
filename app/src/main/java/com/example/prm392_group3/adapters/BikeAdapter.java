@@ -34,7 +34,6 @@ import java.util.List;
 public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
 
     private List<Bike> bikeList;
-    private List<Integer> ratingList;
     private Context context;
     DatabaseReference myRef;
 
@@ -44,10 +43,9 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
     AppCompatButton bookingBtn;
     ConstraintLayout bikeItemHolder;
 
-    public BikeAdapter(Context context, List<Bike> bikeList, List<Integer> ratingList) {
+    public BikeAdapter(Context context, List<Bike> bikeList) {
         this.context = context;
         this.bikeList = bikeList;
-        this.ratingList = ratingList;
         this.userDetails = ObjectStorageUtil.loadObject(context, "user_data.json", User.class);
     }
 
@@ -82,7 +80,7 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
         Picasso.get().load(bike.getImageUrl()).into(holder.bikeImage);
         holder.bikeName.setText(bike.getName());
         holder.remainQuantity.setText("Remain quantity: " + bike.getQuantity());
-        holder.ratingsCount.setText(String.format("%.1f (%d ratings)", calculateAverageRating(), ratingList.size()));
+        holder.ratingsCount.setText(String.format("%.1f (%d ratings)", calculateAverageRating(bike.getRatingList()), bike.getRatingList().size()));
 
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,10 +110,10 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
         });
     }
 
-    private float calculateAverageRating() {
+    private float calculateAverageRating(List<Float> ratingList) {
         int sum = 0;
         if(ratingList.size()==0) return 0;
-        for (int rating : ratingList) {
+        for (float rating : ratingList) {
             sum += rating;
         }
         return (float) sum / ratingList.size();

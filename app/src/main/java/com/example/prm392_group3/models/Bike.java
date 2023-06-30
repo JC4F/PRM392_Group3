@@ -1,11 +1,14 @@
 package com.example.prm392_group3.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Bike implements Serializable {
     String id, name, description, imageUrl;
     float pricePerHour;
     int quantity;
+
+    List<Float> ratingList;
 
     public Bike() {
     }
@@ -65,5 +68,13 @@ public class Bike implements Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public List<Float> getRatingList() {
+        return ratingList;
+    }
+
+    public void setRatingList(List<Float> ratingList) {
+        this.ratingList = ratingList;
     }
 }

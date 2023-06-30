@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.example.prm392_group3.R;
 import com.example.prm392_group3.adapters.BikeAdapter;
 import com.example.prm392_group3.models.Bike;
+import com.example.prm392_group3.models.Rating;
 import com.example.prm392_group3.models.User;
 import com.example.prm392_group3.utils.ObjectStorageUtil;
 import com.example.prm392_group3.utils.UserUtils;
@@ -41,9 +42,9 @@ import java.util.List;
  */
 public class Store extends Fragment {
     User userDetails;
-    DatabaseReference myRef;
+    DatabaseReference bikeRef;
+    DatabaseReference ratingRef;
     private List<Bike> bikeList;
-    private List<Integer> ratingList;
     BikeAdapter bikeAdapter;
     EditText editTextSearch;
     private FloatingActionButton addStoreFab;
@@ -82,7 +83,6 @@ public class Store extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         bikeList = new ArrayList<>();
-        ratingList = new ArrayList<>();
 
         View view = inflater.inflate(R.layout.fragment_store, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.store_recycle_view);
@@ -93,10 +93,11 @@ public class Store extends Fragment {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        bikeAdapter = new BikeAdapter(getContext(), bikeList, ratingList);
+        bikeAdapter = new BikeAdapter(getContext(), bikeList);
         recyclerView.setAdapter(bikeAdapter);
 
-        myRef = FirebaseDatabase.getInstance().getReference("Bike");
+        bikeRef = FirebaseDatabase.getInstance().getReference("Bike");
+        ratingRef = FirebaseDatabase.getInstance().getReference("Rating");
 
         if (userDetails != null && !userDetails.isRole()) {
             addStoreFab.setVisibility(View.GONE);
@@ -136,15 +137,45 @@ public class Store extends Fragment {
         return view;
     }
 
+    private void processBikeAndRatingList(Bike bike){
+        Query query = ratingRef.orderByChild("bikeId").equalTo(bike.getId());
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Float> ratingList = new ArrayList<>();
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Rating rating = snapshot.getValue(Rating.class);
+                    if (rating != null) {
+                        // Lấy giá trị rating và thêm vào danh sách rating
+                        ratingList.add(rating.getRating());
+                    }
+                }
+                bike.setRatingList(ratingList);
+                bikeList.add(bike);
+                bikeAdapter.notifyDataSetChanged();
+
+
+                loadingProgressBar.setVisibility(View.GONE);
+                if(bikeList.size()==0) tvNotFound.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     private void searchBikeFromFirebase(String searchText) {
         tvNotFound.setVisibility(View.GONE);
         loadingProgressBar.setVisibility(View.VISIBLE);
 
         Query query;
         if (searchText.isEmpty()) {
-            query = myRef;
+            query = bikeRef;
         } else {
-            query = myRef.orderByChild("name").startAt(searchText).endAt(searchText + "\uf8ff");
+            query = bikeRef.orderByChild("name").startAt(searchText).endAt(searchText + "\uf8ff");
         }
 
         query.addValueEventListener(new ValueEventListener() {
@@ -155,13 +186,10 @@ public class Store extends Fragment {
                     Bike bike = snapshot.getValue(Bike.class);
                     if (bike.getDescription().toLowerCase().contains(searchText.toLowerCase()) ||
                             bike.getName().toLowerCase().contains(searchText.toLowerCase())) {
-                        bikeList.add(bike);
+                        processBikeAndRatingList(bike);
                     }
                 }
-                bikeAdapter.notifyDataSetChanged();
-
-                loadingProgressBar.setVisibility(View.GONE);
-                if(bikeList.size()==0) tvNotFound.setVisibility(View.VISIBLE);
+//                bikeAdapter.notifyDataSetChanged();
             }
 
             @Override
