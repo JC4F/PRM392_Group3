@@ -157,7 +157,7 @@
                 android:id="@+id/bikedt_book_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Book Now"
+                android:text="BOOK"
                 android:background="@drawable/store_item_btn"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"

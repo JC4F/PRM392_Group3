@@ -54,7 +54,7 @@ public class BikeDetail extends AppCompatActivity {
     private String lastRatingKey;
     DatabaseReference bikeRef;
     DatabaseReference ratingRef;
-    DatabaseReference bookingRef;
+    DatabaseReference bookRef;
     User userDetails;
     private Bike bike;
     ImageView backButton;
@@ -65,7 +65,7 @@ public class BikeDetail extends AppCompatActivity {
     private TextView descriptionTextView;
     private AppCompatButton updateBtn;
     private AppCompatButton deleteBtn;
-    private AppCompatButton bookingBtn;
+    private AppCompatButton bookOrCancelBtn;
     private RatingBar ratingBar;
     private TextInputEditText ratingDescription;
     private AppCompatButton submitRatingBtn;
@@ -89,7 +89,7 @@ public class BikeDetail extends AppCompatActivity {
         userDetails = ObjectStorageUtil.loadObject(getApplicationContext(), "user_data.json", User.class);
         bikeRef = FirebaseDatabase.getInstance().getReference("Bike");
         ratingRef = FirebaseDatabase.getInstance().getReference("Rating");
-        bookingRef = FirebaseDatabase.getInstance().getReference("Book");
+        bookRef = FirebaseDatabase.getInstance().getReference("Book");
         ratingList = new ArrayList<>();
         ratingAdapter = new RatingAdapter(this, ratingList);
         layoutManager = new LinearLayoutManager(this);
@@ -106,7 +106,7 @@ public class BikeDetail extends AppCompatActivity {
         descriptionTextView = findViewById(R.id.bikedt_description);
         updateBtn = findViewById(R.id.bikedt_update_btn);
         deleteBtn = findViewById(R.id.bikedt_delete_btn);
-        bookingBtn = findViewById(R.id.bikedt_book_btn);
+        bookOrCancelBtn = findViewById(R.id.bikedt_book_btn);
         ratingBar = findViewById(R.id.bikedt_rating);
         ratingDescription = findViewById(R.id.bikedt_ratings_description);
         submitRatingBtn = findViewById(R.id.bikedt_submit_button);
@@ -121,8 +121,28 @@ public class BikeDetail extends AppCompatActivity {
         if (userDetails != null && !userDetails.isRole()) {
             updateBtn.setVisibility(View.GONE);
             deleteBtn.setVisibility(View.GONE);
-            bookingBtn.setVisibility(View.VISIBLE);
+            bookOrCancelBtn.setVisibility(View.VISIBLE);
         }
+
+        Query query = bookRef.orderByChild("bikeID").equalTo(bike.getId());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Order order = snapshot.getValue(Order.class);
+                        if (order.getUserID().equals(userDetails.getId())) {
+                            bookOrCancelBtn.setText("CANCEL");
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Xử lý khi có lỗi xảy ra
+            }
+        });
 
         // Hiển thị dữ liệu Bike trên giao diện
         if (bike != null) {
@@ -135,9 +155,9 @@ public class BikeDetail extends AppCompatActivity {
             Picasso.get().load(bike.getImageUrl()).into(imageView);
         }
 
-        Query query = ratingRef.orderByChild("bikeId").equalTo(bike.getId());
+        Query queryOrder = ratingRef.orderByChild("bikeId").equalTo(bike.getId());
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        queryOrder.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -286,16 +306,19 @@ public class BikeDetail extends AppCompatActivity {
             }
         });
 
-        bookingBtn.setOnClickListener(new View.OnClickListener() {
+        bookOrCancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                handleBooking(bike);
+                if(bookOrCancelBtn.getText().equals("BOOK"))
+                    handleBooking(bike);
+                else if(bookOrCancelBtn.getText().equals("CANCEL"))
+                    showDeleteOrderConfirmationDialog(bike.getId());
             }
         });
     }
 
     private void handleBooking(Bike bike) {
-        String bookingId = bookingRef.push().getKey();
+        String bookingId = bookRef.push().getKey();
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String startDateString = sdf.format(new Date()); // Ngày bắt đầu (dạng "dd/MM/yyyy HH:mm:ss")
@@ -328,11 +351,12 @@ public class BikeDetail extends AppCompatActivity {
             booking.setTotalPrice(totalPrice);
 
             // Lưu đối tượng Booking vào Firebase Realtime Database
-            bookingRef.child(bookingId).setValue(booking)
+            bookRef.child(bookingId).setValue(booking)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(getApplicationContext(), "Booking successful!", Toast.LENGTH_SHORT).show();
+                            bookOrCancelBtn.setText("CANCEL");
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -368,6 +392,28 @@ public class BikeDetail extends AppCompatActivity {
         dialog.show();
     }
 
+    private void showDeleteOrderConfirmationDialog(String bikeId) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirm Delete");
+        builder.setMessage("Are you sure you want to delete this bike?");
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Thực hiện xóa bike từ Firebase Realtime Database
+                deleteBook(bikeId);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Đóng dialog
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     private void deleteBike(Bike bike) {
         String bikeId = bike.getId();
 
@@ -385,6 +431,33 @@ public class BikeDetail extends AppCompatActivity {
                     // Hiển thị thông báo lỗi
                     Toast.makeText(getApplicationContext(), "Failed to delete bike: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+    }
+
+    private void deleteBook(String bikeId) {
+        loadingProgressBar.setVisibility(View.VISIBLE);
+
+        Query query = bookRef.orderByChild("bikeID").equalTo(bikeId);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Order order = snapshot.getValue(Order.class);
+                    if (order != null && order.getUserID().equals(userDetails.getId())) {
+                        snapshot.getRef().removeValue();
+
+                        Toast.makeText(getApplicationContext(), "Order deleted successfully", Toast.LENGTH_SHORT).show();
+                        bookOrCancelBtn.setText("BOOK");
+                    }
+                }
+                loadingProgressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(), "Failed to delete order: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

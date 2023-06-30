@@ -23,13 +23,17 @@ import com.example.prm392_group3.activities.orders.Order;
 import com.example.prm392_group3.activities.store.AddOrUpddateBike;
 import com.example.prm392_group3.activities.store.BikeDetail;
 import com.example.prm392_group3.models.Bike;
+import com.example.prm392_group3.models.Rating;
 import com.example.prm392_group3.models.User;
 import com.example.prm392_group3.utils.ObjectStorageUtil;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -42,12 +46,10 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
     private List<Bike> bikeList;
     private Context context;
     DatabaseReference bikeRef;
-    DatabaseReference bookingRef;
+    DatabaseReference bookRef;
 
     User userDetails;
-    AppCompatButton updateBtn;
-    AppCompatButton deleteBtn;
-    AppCompatButton bookingBtn;
+
     ConstraintLayout bikeItemHolder;
 
     public BikeAdapter(Context context, List<Bike> bikeList) {
@@ -63,18 +65,8 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_bike_item, parent, false);
 
         bikeRef = FirebaseDatabase.getInstance().getReference("Bike");
-        bookingRef = FirebaseDatabase.getInstance().getReference("Book");
-
-        updateBtn = view.findViewById(R.id.user_update_btn);
-        deleteBtn = view.findViewById(R.id.user_delete_btn);
-        bookingBtn = view.findViewById(R.id.user_book_btn);
+        bookRef = FirebaseDatabase.getInstance().getReference("Book");
         bikeItemHolder = view.findViewById(R.id.bike_item_holder);
-
-        if (userDetails!=null && !userDetails.isRole()){
-            updateBtn.setVisibility(View.GONE);
-            deleteBtn.setVisibility(View.GONE);
-            bookingBtn.setVisibility(View.VISIBLE);
-        }
 
         return new ViewHolder(view);
     }
@@ -84,13 +76,39 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
         // Lấy dữ liệu từ danh sách dựa trên vị trí position
         Bike bike = bikeList.get(position);
 
+
+        if (userDetails!=null && !userDetails.isRole()){
+            holder.updateBtn.setVisibility(View.GONE);
+            holder.deleteBtn.setVisibility(View.GONE);
+            holder.bookOrCancelBtn.setVisibility(View.VISIBLE);
+        }
+        Query query = bookRef.orderByChild("bikeID").equalTo(bike.getId());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Order order = snapshot.getValue(Order.class);
+                        if (order.getUserID().equals(userDetails.getId())) {
+                            holder.bookOrCancelBtn.setText("CANCEL");
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Xử lý khi có lỗi xảy ra
+            }
+        });
+
         // Load hình ảnh từ URL và hiển thị nó trong ImageView
         Picasso.get().load(bike.getImageUrl()).into(holder.bikeImage);
         holder.bikeName.setText(bike.getName());
         holder.remainQuantity.setText("Remain quantity: " + bike.getQuantity());
         holder.ratingsCount.setText(String.format("%.1f (%d ratings)", calculateAverageRating(bike.getRatingList()), bike.getRatingList().size()));
 
-        updateBtn.setOnClickListener(new View.OnClickListener() {
+        holder.updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Chuyển sang trang mới và truyền mô hình Bike qua Intent
@@ -100,18 +118,21 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
             }
         });
 
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
+        holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Hiển thị hộp thoại xác nhận xóa
-                showDeleteConfirmationDialog(bike);
+                showDeleteBikeConfirmationDialog(bike);
             }
         });
 
-        bookingBtn.setOnClickListener(new View.OnClickListener() {
+        holder.bookOrCancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                handleBooking(bike);
+                if(holder.bookOrCancelBtn.getText().equals("BOOK"))
+                    handleBooking(bike, holder.bookOrCancelBtn);
+                else if(holder.bookOrCancelBtn.getText().equals("CANCEL"))
+                    showDeleteOrderConfirmationDialog(bike.getId(), holder.bookOrCancelBtn);
             }
         });
 
@@ -134,7 +155,7 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
         return (float) sum / ratingList.size();
     }
 
-    private void showDeleteConfirmationDialog(Bike bike) {
+    private void showDeleteBikeConfirmationDialog(Bike bike) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Confirm Delete");
         builder.setMessage("Are you sure you want to delete this bike?");
@@ -143,6 +164,28 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
             public void onClick(DialogInterface dialogInterface, int i) {
                 // Thực hiện xóa bike từ Firebase Realtime Database
                 deleteBike(bike);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Đóng dialog
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void showDeleteOrderConfirmationDialog(String bikeId, AppCompatButton bookOrCancelBtn) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Confirm Delete");
+        builder.setMessage("Are you sure you want to delete this bike?");
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Thực hiện xóa bike từ Firebase Realtime Database
+                deleteBook(bikeId, bookOrCancelBtn);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -177,8 +220,35 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
         });
     }
 
-    private void handleBooking(Bike bike) {
-        String bookingId = bookingRef.push().getKey();
+    private void deleteBook(String bikeId, AppCompatButton bookOrCancelBtn) {
+        loadingProgressBar.setVisibility(View.VISIBLE);
+
+        Query query = bookRef.orderByChild("bikeID").equalTo(bikeId);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Order order = snapshot.getValue(Order.class);
+                    if (order != null && order.getUserID().equals(userDetails.getId())) {
+                        snapshot.getRef().removeValue();
+
+                        Toast.makeText(context, "Order deleted successfully", Toast.LENGTH_SHORT).show();
+                        bookOrCancelBtn.setText("BOOK");
+                    }
+                }
+                loadingProgressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(context, "Failed to delete order: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void handleBooking(Bike bike, AppCompatButton bookOrCancelBtn) {
+        String bookingId = bookRef.push().getKey();
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String startDateString = sdf.format(new Date()); // Ngày bắt đầu (dạng "dd/MM/yyyy HH:mm:ss")
@@ -211,11 +281,12 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
             booking.setTotalPrice(totalPrice);
 
             // Lưu đối tượng Booking vào Firebase Realtime Database
-            bookingRef.child(bookingId).setValue(booking)
+            bookRef.child(bookingId).setValue(booking)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(context, "Booking successful!", Toast.LENGTH_SHORT).show();
+                            bookOrCancelBtn.setText("CANCEL");
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -239,6 +310,9 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
         TextView bikeName;
         TextView remainQuantity;
         TextView ratingsCount;
+        AppCompatButton updateBtn;
+        AppCompatButton deleteBtn;
+        AppCompatButton bookOrCancelBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -246,6 +320,9 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
             bikeName = itemView.findViewById(R.id.user_userName);
             remainQuantity = itemView.findViewById(R.id.user_gmail);
             ratingsCount = itemView.findViewById(R.id.user_phone);
+            updateBtn = itemView.findViewById(R.id.user_update_btn);
+            deleteBtn = itemView.findViewById(R.id.user_delete_btn);
+            bookOrCancelBtn = itemView.findViewById(R.id.user_book_btn);
         }
     }
 }
