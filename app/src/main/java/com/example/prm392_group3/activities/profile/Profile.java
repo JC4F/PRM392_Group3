@@ -1,7 +1,10 @@
 package com.example.prm392_group3.activities.profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -13,8 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.prm392_group3.R;
+import com.example.prm392_group3.activities.authen.Register;
 import com.example.prm392_group3.adapters.ProfileAdapter;
 import com.example.prm392_group3.models.OptionItem;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +36,16 @@ public class Profile extends Fragment {
     private RecyclerView recyclerView;
     private ProfileAdapter adapter;
     private List<OptionItem> dataList;
+
+    private TextView username;
+    private TextView email;
+
+    private TextView editProfile;
+
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+
+    private FirebaseAuth firebaseAuth;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -83,13 +100,54 @@ public class Profile extends Fragment {
         adapter = new ProfileAdapter(requireContext(), dataList);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(adapter);
+
+        //Edit profile click
+        editProfile = view.findViewById(R.id.editProfileText);
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), UpdateProfile.class);
+                startActivity(intent);
+
+            }
+        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+        username = rootView.findViewById(R.id.txtName);
+        email = rootView.findViewById(R.id.txtEmail);
         recyclerView = rootView.findViewById(R.id.pofile_recycle_view);
+
+
+        // Lấy dữ liệu từ DB
+        database = FirebaseDatabase.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        myRef = database.getReference("User").child(firebaseAuth.getCurrentUser().getUid());
+
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if(snapshot.exists()) {
+                    String usernameDB= snapshot.child("username").getValue(String.class);
+                    String emailDB = snapshot.child("email").getValue(String.class);
+                    Log.i("Username", usernameDB);
+                    Log.i("email", emailDB);
+                    username.setText(usernameDB);
+                    email.setText(emailDB);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
         return rootView;
     }
+
+
 }

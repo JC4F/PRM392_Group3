@@ -114,12 +114,12 @@ public class Register extends AppCompatActivity {
                                             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                                                 if (databaseError == null) {
                                                     // Hiển thị thông báo thành công
-                                                    Toast.makeText(Register.this, "User register successfully", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(Register.this, "User login successfully", Toast.LENGTH_SHORT).show();
                                                     // Đóng Activity
                                                     finish();
                                                 } else {
                                                     // Hiển thị thông báo lỗi
-                                                    Toast.makeText(Register.this, "Failed to register: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(Register.this, "Failed to login: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
