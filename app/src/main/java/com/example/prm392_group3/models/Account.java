@@ -9,15 +9,17 @@ public class Account {
     private int avatar;
 
     private String phone;
+    private String username;
 
 
     public Account() {
     }
-    public Account(int avatar, String email, String role, String Phone) {
+    public Account(int avatar, String email, String role, String Phone, String username) {
         this.avatar = avatar;
         this.email = email;
         this.role = role;
-        this.phone = phone;
+        this.phone = Phone;
+        this.username = username;
     }
 
 
@@ -67,5 +69,12 @@ public class Account {
 
     public void setRole(String role) {
         this.role = role;
+    }
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

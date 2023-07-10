@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 import com.example.prm392_group3.R;
 import com.example.prm392_group3.models.Account;
 
@@ -23,16 +24,18 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountH
     @NonNull
     @Override
     public AccountHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_admin_account, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_admin_user, parent, false);
         return new AccountHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull AccountHolder holder, int position) {
-        holder.imv_ava.setImageResource(acc.get(position).getAvatar());
-        holder.tv_title.setText(acc.get(position).getEmail());
-        holder.tv_des.setText(acc.get(position).getRole());
-        holder.tv_phone.setText(acc.get(position).getRole());
+        holder.user_item_image.setImageResource(acc.get(position).getAvatar());
+        holder.user_gmail.setText(acc.get(position).getEmail());
+        holder.user_role.setText(acc.get(position).getRole());
+        holder.user_phone.setText(acc.get(position).getPhone());
+        holder.user_userName.setText(acc.get(position).getUsername());
+
 
     }
 
@@ -42,17 +45,24 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountH
     }
 
     class AccountHolder extends RecyclerView.ViewHolder {//dai dien cho layout row_chapter
-        ImageView imv_ava;
-        TextView tv_title;
-        TextView tv_des;
-        TextView tv_phone;
+        ImageView user_item_image;
+        TextView user_gmail;
+        TextView user_phone;
+        TextView user_status;
+        TextView user_role;
+        TextView user_userName;
+
 
         public AccountHolder(@NonNull View itemView) {
             super(itemView);
-            imv_ava= itemView.findViewById(R.id.imgAvatar);
-            tv_title = itemView.findViewById(R.id.tvRec);
-            tv_des = itemView.findViewById(R.id.tvDes);
-            tv_phone = itemView.findViewById(R.id.tv_phone);
+            user_item_image= itemView.findViewById(R.id.user_item_image);
+            user_gmail = itemView.findViewById(R.id.user_gmail);
+            user_phone = itemView.findViewById(R.id.user_phone);
+            user_status = itemView.findViewById(R.id.user_status);
+            user_role = itemView.findViewById(R.id.user_role);
+            user_userName = itemView.findViewById(R.id.user_userName);
+
+
         }
     }
 }
