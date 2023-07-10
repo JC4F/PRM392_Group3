@@ -129,7 +129,7 @@ public class Login extends AppCompatActivity {
 
                                                 if (userData != null) {
                                                     ObjectStorageUtil.saveObject(getApplicationContext(), "user_data.json", userData);
-                                                    if (userData.isRole() != true){
+                                                    if (userData.isRole() == true){
                                                         Intent intent = new Intent(Login.this, AccountManagement.class);
                                                         startActivity(intent);
                                                         finish();
