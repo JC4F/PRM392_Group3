@@ -1,6 +1,7 @@
 package com.example.prm392_group3.activities.orders;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ordersManagement#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ordersManagement extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
@@ -128,12 +124,33 @@ public class ordersManagement extends Fragment {
                     String bookKey = bookSnapshot.getKey();
                     if (bookKey != null) {
                         Order order = new Order();
-                        String bikeID = bookSnapshot.child("BikeID").getValue(String.class);
+                        String bikeID = bookSnapshot.child("bikeID").getValue(String.class);
+                        String userID = bookSnapshot.child("userID").getValue(String.class);
+                        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("User")
+                                .child(String.valueOf(userID));
                         DatabaseReference bikeRef = FirebaseDatabase.getInstance().getReference("Bike")
                                 .child(String.valueOf(bikeID));
 
                         CompletableFuture<Void> future = new CompletableFuture<>();
                         futures.add(future);
+
+                        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                                    String keyChild = childSnapshot.getKey();
+                                    if(keyChild.equals("username")){
+                                        order.setUserName(childSnapshot.getValue(String.class));
+                                    }
+                                }
+                                future.complete(null);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                future.completeExceptionally(databaseError.toException());
+                            }
+                        });
 
                         bikeRef.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -154,21 +171,19 @@ public class ordersManagement extends Fragment {
                         });
 
                         //order.setResourceID(R.drawable.default_avatar);
-                        order.setBookID(bookSnapshot.child("BookingID").getValue(String.class));
+                        order.setBookID(bookSnapshot.child("bookID").getValue(String.class));
                         order.setBikeID(bikeID);
-                        order.setBookingStatus(bookSnapshot.child("BookingStatus").getValue(String.class));
-                        order.setEndDate(bookSnapshot.child("EndDateTime").getValue(String.class));
-                        order.setStartDate(bookSnapshot.child("StartDateTime").getValue(String.class));
-                        order.setTotalPrice(bookSnapshot.child("TotalPrice").getValue(Integer.class).intValue());
-                        order.setUserID(bookSnapshot.child("UserID").getValue(Integer.class).intValue());
+                        order.setBookingStatus(bookSnapshot.child("bookingStatus").getValue(String.class));
+                        order.setEndDate(bookSnapshot.child("endDate").getValue(String.class));
+                        order.setStartDate(bookSnapshot.child("startDate").getValue(String.class));
+                        order.setTotalPrice(bookSnapshot.child("totalPrice").getValue(Integer.class).intValue());
+                        order.setUserID(bookSnapshot.child("userID").getValue(String.class));
                         orders.add(order);
                     }
                 }
 
-                // Sử dụng CompletableFuture.allOf để đợi tất cả các CompletableFuture hoàn thành
                 CompletableFuture<Void> allFutures = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
 
-                // Khi tất cả CompletableFuture hoàn thành, gọi callback với danh sách đơn hàng đã được cập nhật tên xe
                 allFutures.thenAccept((Void) -> {
                     callback.onOrdersLoaded(orders);
                 });
