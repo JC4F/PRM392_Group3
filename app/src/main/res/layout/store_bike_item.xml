@@ -6,9 +6,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bike_item_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/user_detail_btn"
+        app:layout_constraintBottom_toTopOf="@id/user_book_btn"
         app:layout_constraintTop_toTopOf="parent"
         android:background="#F1D2D2"
         android:padding="8dp">
@@ -69,34 +70,7 @@
                     android:text="4.5 (10 Reviews)"
                     android:textColor="@color/app_black" />
 
-                <TextView
-                    android:id="@+id/user_row"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:text="15 Comments"
-                    android:layout_marginStart="20dp"
-                    android:textColor="@color/app_black" />
-
-                <ImageView
-                    android:id="@+id/store_comments_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/store_comment_24"
-                    android:layout_marginEnd="4dp"
-                    app:tint="@color/app_black"/>
-
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/user_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="Available"
-                app:layout_constraintTop_toBottomOf="@id/store_ratings_comments_layout"
-                app:layout_constraintStart_toStartOf="parent"
-                android:textColor="@color/app_black" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -121,7 +95,7 @@
             android:textStyle="bold"/>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/user_band_btn"
+            android:id="@+id/user_delete_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -134,10 +108,10 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/user_detail_btn"
+        android:id="@+id/user_book_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Book Now"
+        android:text="BOOK"
         android:background="@drawable/store_item_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         android:visibility="invisible"/>

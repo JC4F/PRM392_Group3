@@ -5,36 +5,26 @@ public class Order {
     private String bookID;
     private String BikeID;
     private String BookingStatus;
-    private String userName;
     private String userID;
     private String bikeName;
     private String startDate;
     private String endDate;
-    private int totalPrice;
+    private Float totalPrice;
 
     public Order() {
 
     }
 
-    public Order(String resourceID, String userName, String bookID, String bikeID, String bookingStatus, String userID, String bikeName, String startDate, String endDate, int totalPrice) {
+    public Order(String resourceID, String bookID, String bikeID, String bookingStatus, String userID, String bikeName, String startDate, String endDate, Float totalPrice) {
         this.resourceID = resourceID;
         this.bookID = bookID;
-        this.BikeID = bikeID;
-        this.BookingStatus = bookingStatus;
-        this.userName = userName;
+        BikeID = bikeID;
+        BookingStatus = bookingStatus;
         this.userID = userID;
         this.bikeName = bikeName;
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalPrice = totalPrice;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getResourceID() {
@@ -101,11 +91,11 @@ public class Order {
         this.endDate = endDate;
     }
 
-    public int getTotalPrice() {
+    public Float getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
+    public void setTotalPrice(Float totalPrice) {
         this.totalPrice = totalPrice;
     }
 }
