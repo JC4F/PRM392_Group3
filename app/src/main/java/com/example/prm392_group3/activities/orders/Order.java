@@ -5,6 +5,7 @@ public class Order {
     private String bookID;
     private String BikeID;
     private String BookingStatus;
+    private String userName;
     private String userID;
     private String bikeName;
     private String startDate;
@@ -15,16 +16,25 @@ public class Order {
 
     }
 
-    public Order(String resourceID, String bookID, String bikeID, String bookingStatus, String userID, String bikeName, String startDate, String endDate, Float totalPrice) {
+    public Order(String resourceID, String userName, String bookID, String bikeID, String bookingStatus, String userID, String bikeName, String startDate, String endDate, Float totalPrice) {
         this.resourceID = resourceID;
         this.bookID = bookID;
-        BikeID = bikeID;
-        BookingStatus = bookingStatus;
+        this.BikeID = bikeID;
+        this.BookingStatus = bookingStatus;
+        this.userName = userName;
         this.userID = userID;
         this.bikeName = bikeName;
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalPrice = totalPrice;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getResourceID() {
