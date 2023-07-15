@@ -38,6 +38,8 @@ public class Profile extends Fragment {
     private TextView username;
     private TextView email;
 
+    private TextView editProfile;
+
     private FirebaseDatabase database;
     private DatabaseReference myRef;
 
@@ -96,6 +98,16 @@ public class Profile extends Fragment {
         adapter = new ProfileAdapter(requireContext(), dataList);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(adapter);
+
+        //Edit profile click
+        editProfile = view.findViewById(R.id.editProfileText);
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+            }
+        });
     }
 
     @Override
@@ -105,6 +117,7 @@ public class Profile extends Fragment {
         username = rootView.findViewById(R.id.txtName);
         email = rootView.findViewById(R.id.txtEmail);
         recyclerView = rootView.findViewById(R.id.pofile_recycle_view);
+
 
         // Lấy dữ liệu từ DB
         database = FirebaseDatabase.getInstance();
@@ -132,4 +145,6 @@ public class Profile extends Fragment {
         });
         return rootView;
     }
+
+
 }
