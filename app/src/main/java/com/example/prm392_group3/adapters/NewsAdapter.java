@@ -16,7 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prm392_group3.models.News;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
+
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
     private List<News> newsList;  // Assuming you have a list of NewsItem objects
 
@@ -38,7 +41,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         // Bind the data to the views in the NewsViewHolder
         holder.newsTitle.setText(newsItem.getTitle());
         holder.newsDesc.setText(newsItem.getPostContent());
-        holder.newsDate.setText(newsItem.getPostDate());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String formattedDate = dateFormat.format(newsItem.getPostDate());
+
+        holder.newsDate.setText(formattedDate);
         holder.newsSource.setText(newsItem.getSource());
     }
 
