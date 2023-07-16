@@ -1,5 +1,6 @@
 package com.example.prm392_group3.activities.blog;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,10 +14,13 @@ import com.example.prm392_group3.R;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.prm392_group3.activities.MainActivity;
+import com.example.prm392_group3.activities.orders.Order;
+import com.example.prm392_group3.models.Bike;
 import com.example.prm392_group3.models.News;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,9 +28,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.prm392_group3.adapters.NewsAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,6 +55,7 @@ public class AllBlog extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private DatabaseReference fbDatabase;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -68,6 +82,9 @@ public class AllBlog extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+    private boolean isDataLoaded = false;
+    DatabaseReference newsRef;
+    private Button addNewsButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,16 +101,34 @@ public class AllBlog extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_all_blog, container, false);
 
+        addNewsButton = view.findViewById(R.id.btnInsert);
+        addNewsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start CreateNewsActivity
+                Intent intent = new Intent(getActivity(), CreateNewsActivity.class);
+                startActivity(intent);
+            }
+
+        });
+
+
         recyclerView = view.findViewById(R.id.recy_news);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        newsRef = FirebaseDatabase.getInstance().getReference("News");
+
+        loadNewsData();
 
         // Create a list of news items
         newsList = new ArrayList<>();
         // Add your news items to the list
         // Example:
-        newsList.add(new News(1, "2023-06-20", "Exciting News 1", "https://example.com/news1", "This is the content of News 1", "News Source 1", "https://example.com/source1", "news1_image.jpg"));
-        newsList.add(new News(2, "2023-06-19", "Breaking News 2", "https://example.com/news2", "This is the content of News 2", "News Source 2", "https://example.com/source2", "news2_image.jpg"));
-        newsList.add(new News(3, "2023-06-18", "Latest News 3", "https://example.com/news3", "This is the content of News 3", "News Source 3", "https://example.com/source3", "news3_image.jpg"));
+        Calendar calendar = Calendar.getInstance();
+        Date currentDate = calendar.getTime();
+
+        newsList.add(new News("1", currentDate, "Exciting News 1", "https://example.com/news1", "This is the content of News 1", "News Source 1", "https://example.com/source1", "news1_image.jpg"));
+        newsList.add(new News("2", currentDate, "Breaking News 2", "https://example.com/news2", "This is the content of News 2", "News Source 2", "https://example.com/source2", "news2_image.jpg"));
+        newsList.add(new News("3", currentDate, "Latest News 3", "https://example.com/news3", "This is the content of News 3", "News Source 3", "https://example.com/source3", "news3_image.jpg"));
         // ...
 
         adapter = new NewsAdapter(newsList);
@@ -102,4 +137,36 @@ public class AllBlog extends Fragment {
 
         return view;
     }
+
+
+    private void loadNewsData() {
+        Query query;
+            query = newsRef;
+        newsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                newsList.clear(); // Clear the existing newsList before adding new data
+
+                for (DataSnapshot newsSnapshot : dataSnapshot.getChildren()) {
+                    News news = newsSnapshot.getValue(News.class);
+                    if (news != null) {
+                        newsList.add(news);
+                    }
+                }
+
+                adapter.notifyDataSetChanged(); // Notify the adapter that the data has changed
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle any errors that occur during data retrieval
+                Log.e("loadNewsData", "Failed to load news data: " + databaseError.getMessage());
+                Toast.makeText(getActivity(), "Failed to load news data", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
+
 }
