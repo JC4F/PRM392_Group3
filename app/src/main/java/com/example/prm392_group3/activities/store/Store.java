@@ -139,7 +139,7 @@ public class Store extends Fragment {
 
     private void processBikeAndRatingList(Bike bike){
         Query query = ratingRef.orderByChild("bikeId").equalTo(bike.getId());
-        query.addValueEventListener(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<Float> ratingList = new ArrayList<>();
@@ -152,6 +152,7 @@ public class Store extends Fragment {
                     }
                 }
                 bike.setRatingList(ratingList);
+                bikeList.removeIf(bikeTmp -> bikeTmp.getId().equals(bike.getId()));
                 bikeList.add(bike);
                 bikeAdapter.notifyDataSetChanged();
 

@@ -9,14 +9,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.prm392_group3.R;
 import com.example.prm392_group3.activities.MainActivity;
+import com.example.prm392_group3.activities.blog.NewsDetail;
 import com.example.prm392_group3.models.News;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.prm392_group3.models.News;
+import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
+
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
     private List<News> newsList;  // Assuming you have a list of NewsItem objects
 
@@ -38,8 +43,22 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         // Bind the data to the views in the NewsViewHolder
         holder.newsTitle.setText(newsItem.getTitle());
         holder.newsDesc.setText(newsItem.getPostContent());
-        holder.newsDate.setText(newsItem.getPostDate());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String formattedDate = dateFormat.format(newsItem.getPostDate());
+        Picasso.get().load(newsItem.getImage()).into(holder.newsImage);
+        holder.newsDate.setText(formattedDate);
         holder.newsSource.setText(newsItem.getSource());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open the detail page for the selected news item
+                Context context = holder.itemView.getContext();
+                Intent intent = new Intent(context, NewsDetail.class);
+                intent.putExtra("newsId", newsItem.getPid()); // Pass any necessary data to the detail activity
+                context.startActivity(intent);
+            }
+        });
+
     }
 
     @Override

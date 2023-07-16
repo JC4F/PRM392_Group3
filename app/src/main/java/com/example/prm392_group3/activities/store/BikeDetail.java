@@ -79,6 +79,7 @@ public class BikeDetail extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     boolean isFirstKey = false;
+    private ImageView refreshBtn;
 
 
     @Override
@@ -90,6 +91,7 @@ public class BikeDetail extends AppCompatActivity {
         bikeRef = FirebaseDatabase.getInstance().getReference("Bike");
         ratingRef = FirebaseDatabase.getInstance().getReference("Rating");
         bookRef = FirebaseDatabase.getInstance().getReference("Book");
+
         ratingList = new ArrayList<>();
         ratingAdapter = new RatingAdapter(this, ratingList);
         layoutManager = new LinearLayoutManager(this);
@@ -112,6 +114,7 @@ public class BikeDetail extends AppCompatActivity {
         submitRatingBtn = findViewById(R.id.bikedt_submit_button);
         loadMoreBtn = findViewById(R.id.bikedt_loadmore_button);
         pbLoadMore = findViewById(R.id.bikedt_pb_loadmore);
+        refreshBtn = findViewById(R.id.bikedt_btn_refresh);
         pbRating = findViewById(R.id.bikedt_pb_rating);
         tvNotRating = findViewById(R.id.bikedt_tv_no_one_ratings);
 
@@ -315,6 +318,18 @@ public class BikeDetail extends AppCompatActivity {
                     showDeleteOrderConfirmationDialog(bike.getId());
             }
         });
+
+        refreshBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lastRatingKey = null;
+                isFirstKey = false;
+                countLoadMore =  -1;
+                ratingList.clear();
+                ratingAdapter.notifyDataSetChanged();
+                getInitialRatings();
+            }
+        });
     }
 
     private void handleBooking(Bike bike) {
@@ -419,6 +434,9 @@ public class BikeDetail extends AppCompatActivity {
 
         loadingProgressBar.setVisibility(View.VISIBLE);
 
+        deleteRatingByBikeId(bikeId);
+        deleteBookByBikeId(bikeId);
+
         bikeRef.child(bikeId).removeValue(new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
@@ -462,6 +480,47 @@ public class BikeDetail extends AppCompatActivity {
         });
     }
 
+    private void deleteRatingByBikeId(String bikeId) {
+        Query query = ratingRef.orderByChild("bikeId").equalTo(bikeId);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Rating rating = snapshot.getValue(Rating.class);
+                    if (rating != null) {
+                        snapshot.getRef().removeValue();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(), "Failed to delete ratins: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void deleteBookByBikeId(String bikeId) {
+        Query query = bookRef.orderByChild("bikeID").equalTo(bikeId);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Order order = snapshot.getValue(Order.class);
+                    if (order != null) {
+                        snapshot.getRef().removeValue();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(), "Failed to delete book: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void processUserRating(Rating rating, String userId, boolean isOverload) {
         // Truy vấn Firebase Realtime Database để lấy thông tin User tương ứng
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("User").child(userId);
@@ -497,7 +556,6 @@ public class BikeDetail extends AppCompatActivity {
 
     private void getInitialRatings() {
         loadMoreRatings(true);
-
     }
 
     private void loadMoreRatings(boolean isInit) {
@@ -510,14 +568,19 @@ public class BikeDetail extends AppCompatActivity {
 
         Query query;
         if (isInit) {
-            query = ratingRef.orderByKey().limitToLast(PAGE_SIZE + 1);
+            query = ratingRef.orderByChild("bikeId").equalTo(bike.getId()).limitToLast(PAGE_SIZE + 1);
         } else {
-            query = ratingRef.orderByKey().endBefore(lastRatingKey).limitToLast(PAGE_SIZE + 1);
+            query = ratingRef.orderByChild("bikeId")
+                    .endBefore(bike.getId(), lastRatingKey)
+                    .limitToLast(PAGE_SIZE + 1);
+
         }
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                pbLoadMore.setVisibility(View.VISIBLE);
+                tvNotRating.setVisibility(View.GONE);
                 if (dataSnapshot.exists()) {
                     int countSuitableData = 0;
                     isFirstKey = false;

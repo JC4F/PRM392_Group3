@@ -18,6 +18,14 @@
         <activity
                 android:name=".activities.profile.ChangePassword"
                 android:exported="false">
+        <activity
+            android:name=".activities.store.BikeDetail"
+            android:exported="false" />
+        <activity
+            android:name=".activities.authen.Forgotpass"
+            android:exported="false">
+            android:exported="false" />
+            android:name=".activities.blog.NewsDetail"
             <meta-data
                     android:name="android.app.lib_name"
                     android:value=""/>
@@ -42,6 +50,9 @@
         <activity
                 android:name=".activities.blog.AllBlog"
                 android:exported="false"/>
+            android:name=".activities.authen.Register"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
                 android:name=".activities.store.AddOrUpddateBike"
                 android:exported="false"/>
@@ -71,6 +82,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.blog.CreateNewsActivity"
+            android:label="Create News"></activity>
     </application>
 
 </manifest>

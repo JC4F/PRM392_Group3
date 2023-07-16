@@ -9,14 +9,6 @@
         app:cnb_textColor="#ffffff" />
 
     <item
-        android:id="@+id/booking"
-        android:icon="@drawable/booking_24"
-        android:title="Booking"
-        app:cnb_backgroundColor="@color/app_strong_blue"
-        app:cnb_iconColor="#ffffff"
-        app:cnb_textColor="#ffffff" />
-
-    <item
         android:id="@+id/store"
         android:icon="@drawable/baseline_store_24"
         android:title="Store"
