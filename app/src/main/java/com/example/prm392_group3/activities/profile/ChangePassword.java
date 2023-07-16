@@ -28,7 +28,7 @@ public class ChangePassword extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         EditText txtPassword = findViewById(R.id.txtChangePassword);
         EditText currentPassword = findViewById(R.id.txtOldPassword);
-
+        EditText newPassword = findViewById(R.id.txtChangePassword);
         Button btn = findViewById(R.id.btnChangePassword);
         /*btn.setOnClickListener(new View.OnClickListener() {
             @Override

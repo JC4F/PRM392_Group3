@@ -7,10 +7,10 @@ public class News {
     private String pid;
     private Date postDate;
     private String title;
-    private String url;
+    private String hashtag;
     private String postContent;
     private String source;
-    private String sourceUrl;
+    private String category;
     private String image;
     private String CreatedBy;
 
@@ -24,24 +24,24 @@ public class News {
 
     /**
      *
-     * @param sourceUrl
+     * @param category
      * @param image
      * @param postContent
      * @param postDate
      * @param pid
      * @param source
      * @param title
-     * @param url
+     * @param hashtag
      */
-    public News(String pid, Date postDate, String title, String url, String postContent, String source, String sourceUrl, String image, String CreatedBy) {
+    public News(String pid, Date postDate, String title, String hashtag, String postContent, String source, String category, String image, String CreatedBy) {
         super();
         this.pid = pid;
         this.postDate = postDate;
         this.title = title;
-        this.url = url;
+        this.hashtag = hashtag;
         this.postContent = postContent;
         this.source = source;
-        this.sourceUrl = sourceUrl;
+        this.category = category;
         this.image = image;
         this.CreatedBy = CreatedBy;
 
@@ -78,12 +78,12 @@ public class News {
         this.title = title;
     }
 
-    public String getUrl() {
-        return url;
+    public String getHashtag() {
+        return "#"+hashtag.toUpperCase();
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setHashtag(String hashtag) {
+        this.hashtag = hashtag;
     }
 
     public String getPostContent() {
@@ -94,20 +94,20 @@ public class News {
         this.postContent = postContent;
     }
 
-    public String getSource() {
+    public String getCategory() {
         return source;
     }
 
-    public void setSource(String source) {
+    public void setCategory(String source) {
         this.source = source;
     }
 
-    public String getSourceUrl() {
-        return sourceUrl;
+    public String getCategoryHashtag() {
+        return category;
     }
 
-    public void setSourceUrl(String sourceUrl) {
-        this.sourceUrl = sourceUrl;
+    public void setCategoryHashtag(String category) {
+        this.category = category;
     }
 
 

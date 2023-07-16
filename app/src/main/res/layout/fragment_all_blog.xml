@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="632dp"
+        android:layout_height="721dp"
         android:background="@color/white"
         android:orientation="vertical"
         tools:context=".activities.blog.CreateNews">
@@ -28,7 +28,10 @@
                 android:text="MY NEWS"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textStyle="bold"
+                />
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnInsert"
                 android:layout_width="wrap_content"
@@ -71,6 +74,7 @@
                 android:hint="Search"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
+                android:textColor="@color/black"
                 android:padding="10dp" />
 
             <Button
@@ -88,7 +92,7 @@
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
-            android:layout_height="494dp">
+            android:layout_height="wrap_content">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recy_news"
