@@ -18,6 +18,8 @@
         android:id="@+id/newsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
+
         android:text="News Title"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -26,6 +28,8 @@
         android:id="@+id/source"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
+
         android:text="News Title"
         android:textSize="12sp"
         android:layout_marginTop="16dp" />
@@ -34,15 +38,50 @@
         android:id="@+id/newsImage"
         android:layout_width="match_parent"
         android:layout_height="163dp"
+
         android:layout_marginTop="16dp"
         android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/newsContent"
+        android:layout_width="381dp"
+        android:layout_height="292dp"
+
+        android:layout_marginTop="16dp"
+        android:text="News Content"
+        android:textColor="@color/black" />
+    <LinearLayout
+        android:id="@+id/bikedt_ln_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="News Content"
-        android:layout_marginTop="16dp" />
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/updatebtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Update"
+            android:background="@color/app_weak_blue"
+            android:layout_marginEnd="4dp"
+            android:textColor="@color/app_black"
+            android:textStyle="bold"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/deletebtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:background="@color/app_weak_blue"
+            android:text="Delete"
+            android:textColor="@color/app_black"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
 
     <!-- Add other views for news details -->
 </LinearLayout>
