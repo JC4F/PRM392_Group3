@@ -94,7 +94,6 @@ public class Login extends AppCompatActivity {
                 // Lấy thông tin đăng nhập từ EditText
                 String email = editTextUsername.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
-f
                 // Kiểm tra xem email và password có hợp lệ hay không
                 if (TextUtils.isEmpty(email)) {
                     editTextUsername.setError("Please enter your email");

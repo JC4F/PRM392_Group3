@@ -1,5 +1,6 @@
 package com.example.prm392_group3.activities.profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.prm392_group3.R;
+import com.example.prm392_group3.activities.authen.Register;
 import com.example.prm392_group3.adapters.ProfileAdapter;
 import com.example.prm392_group3.models.OptionItem;
 import com.google.firebase.auth.FirebaseAuth;
@@ -104,7 +106,8 @@ public class Profile extends Fragment {
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getContext(), UpdateProfile.class);
+                startActivity(intent);
 
             }
         });

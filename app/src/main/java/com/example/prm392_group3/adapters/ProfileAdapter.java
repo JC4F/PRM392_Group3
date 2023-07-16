@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prm392_group3.activities.authen.Login;
+import com.example.prm392_group3.activities.profile.ChangePassword;
 import com.example.prm392_group3.models.OptionItem;
 import com.example.prm392_group3.utils.ObjectStorageUtil;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,12 +50,18 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             public void onClick(View view) {
                 // Kiểm tra nội dung của TextView
                 if (holder.descriptionText.getText().toString().equals("Logout")) {
-                    // xoa user
+                    // Delete User
+
+
                     ObjectStorageUtil.deleteObject(context, "user_data.json");
 
                     // Thực hiện hành động Logout
                     performLogoutAction();
                 }
+                if(holder.descriptionText.getText().toString().equals("Change Password")) {
+                    performChangePassword();
+                }
+                // Thêm phần
             }
         });
 
@@ -71,6 +78,11 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
         Intent intent = new Intent(context, Login.class); //sẽ xóa tất cả các Activity khác trong stack và chỉ hiển thị trang đăng nhập
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        context.startActivity(intent);
+    }
+
+    private void performChangePassword() {
+        Intent intent = new Intent(context, ChangePassword.class);
         context.startActivity(intent);
     }
 
