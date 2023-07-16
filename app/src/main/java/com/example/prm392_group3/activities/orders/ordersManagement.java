@@ -234,7 +234,8 @@ public class ordersManagement extends Fragment {
                     adapter.setData(orders);
                     adapter.notifyDataSetChanged();
                 }
-            });            return;
+            });
+            return;
         }
 
         List<Order> searchResults = new ArrayList<>();
