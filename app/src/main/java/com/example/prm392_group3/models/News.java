@@ -1,15 +1,19 @@
 package com.example.prm392_group3.models;
 
+import java.util.Date;
+
 public class News {
 
-    private Integer pid;
-    private String postDate;
+    private String pid;
+    private Date postDate;
     private String title;
     private String url;
     private String postContent;
     private String source;
     private String sourceUrl;
     private String image;
+    private String CreatedBy;
+
 
     /**
      * No args constructor for use in serialization
@@ -29,7 +33,7 @@ public class News {
      * @param title
      * @param url
      */
-    public News(Integer pid, String postDate, String title, String url, String postContent, String source, String sourceUrl, String image) {
+    public News(String pid, Date postDate, String title, String url, String postContent, String source, String sourceUrl, String image, String CreatedBy) {
         super();
         this.pid = pid;
         this.postDate = postDate;
@@ -39,21 +43,30 @@ public class News {
         this.source = source;
         this.sourceUrl = sourceUrl;
         this.image = image;
+        this.CreatedBy = CreatedBy;
+
     }
 
-    public Integer getPid() {
+    public String getPid() {
         return pid;
     }
 
-    public void setPid(Integer pid) {
+    public void setPid(String pid) {
         this.pid = pid;
     }
+    public String getCreatedBy() {
+        return CreatedBy;
+    }
 
-    public String getPostDate() {
+    public void setCreatedBy(String createdBy) {
+        this.CreatedBy = createdBy;
+    }
+
+    public Date getPostDate() {
         return postDate;
     }
 
-    public void setPostDate(String postDate) {
+    public void setPostDate(Date postDate) {
         this.postDate = postDate;
     }
 

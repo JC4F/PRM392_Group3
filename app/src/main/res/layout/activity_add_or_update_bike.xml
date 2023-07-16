@@ -171,17 +171,6 @@
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Checkbox for bike availability -->
-            <CheckBox
-                android:id="@+id/au_bike_checkbox_available"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:text="Is Available"
-                android:textColor="@color/app_black" />
-
             <!-- Button for adding a new bike -->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/au_bike_btn_add_bike"

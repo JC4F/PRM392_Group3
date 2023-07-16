@@ -9,14 +9,12 @@ import androidx.fragment.app.Fragment;
 import com.example.prm392_group3.R;
 import com.example.prm392_group3.activities.authen.Login;
 import com.example.prm392_group3.activities.blog.AllBlog;
-import com.example.prm392_group3.activities.booking.Booking;
 import com.example.prm392_group3.activities.home.Home;
 import com.example.prm392_group3.activities.orders.ordersManagement;
 import com.example.prm392_group3.activities.profile.Profile;
 import com.example.prm392_group3.activities.store.Store;
 import com.example.prm392_group3.models.User;
 import com.example.prm392_group3.utils.ObjectStorageUtil;
-import com.example.prm392_group3.utils.UserUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
@@ -53,15 +51,13 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(int i) {
                 if (i == R.id.home) {
                     fragment = new Home();
-                } else if (i == R.id.booking) {
-                    fragment = new Booking();
                 } else if (i == R.id.profile) {
                     fragment = new Profile();
                 } else if (i == R.id.store) {
                     fragment = new Store();
                 } else if (i == R.id.blog) {
                     fragment = new AllBlog();
-                } else if(i == R.id.ordersManagement){
+                } else if (i == R.id.ordersManagement) {
                     fragment = new ordersManagement();
                 }
 

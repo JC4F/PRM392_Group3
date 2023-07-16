@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_container"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -33,7 +34,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="625dp">
+        android:layout_height="610dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/mainContent"
@@ -103,7 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.77" />
+                    app:layout_constraintGuide_percent="0.91" />
 
                 <androidx.constraintlayout.widget.Barrier
                     android:id="@+id/Barrier"
@@ -119,16 +120,6 @@
                     android:layout_marginTop="16dp"
                     android:src="@drawable/search"
                     app:layout_constraintStart_toStartOf="@+id/LineStraight02"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/FilterIcon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
-                    android:src="@drawable/filter"
-                    app:layout_constraintStart_toEndOf="@+id/SearchIcon"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -149,55 +140,64 @@
                     android:orientation="horizontal">
 
                     <Button
+                        android:id="@+id/btnAll"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_marginTop="14dp"
                         android:layout_marginEnd="14dp"
                         android:layout_marginBottom="14dp"
-                        android:background="@android:color/transparent"
-                        android:backgroundTint="#E4E2E2"
-                        android:foreground="@drawable/rounded_border"
+                        android:background="@drawable/button_background"
                         android:outlineProvider="none"
                         android:text="All Orders"
-                        android:textColor="#171616" />
+                        android:textColor="#171616"/>
 
                     <Button
+                        android:id="@+id/btnPending"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_marginTop="14dp"
                         android:layout_marginEnd="14dp"
                         android:layout_marginBottom="14dp"
-                        android:background="@android:color/transparent"
-                        android:backgroundTint="#E4E2E2"
-                        android:foreground="@drawable/rounded_border"
+                        android:background="@drawable/button_background"
                         android:outlineProvider="none"
                         android:text="Pending"
                         android:textColor="#171616" />
 
                     <Button
+                        android:id="@+id/btnProcess"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_marginTop="14dp"
                         android:layout_marginEnd="14dp"
                         android:layout_marginBottom="14dp"
-                        android:background="@android:color/transparent"
-                        android:backgroundTint="#E4E2E2"
-                        android:foreground="@drawable/rounded_border"
+                        android:background="@drawable/button_background"
                         android:outlineProvider="none"
                         android:text="Process"
                         android:textColor="#171616" />
 
                     <Button
+                        android:id="@+id/btnCompleted"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_marginTop="14dp"
                         android:layout_marginEnd="14dp"
                         android:layout_marginBottom="14dp"
-                        android:background="@android:color/transparent"
-                        android:backgroundTint="#E4E2E2"
-                        android:foreground="@drawable/rounded_border"
+                        android:background="@drawable/button_background"
                         android:outlineProvider="none"
                         android:text="Completed"
+                        android:textColor="#171616" />
+
+                    <Button
+                        android:id="@+id/btnDenied"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginBottom="14dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_background"
+                        android:outlineProvider="none"
+                        android:text="Denied"
                         android:textColor="#171616" />
 
                     <View
@@ -323,7 +323,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:text="View All"
                     android:textColor="#575FE4"
                     android:textSize="14sp" />
 

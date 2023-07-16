@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E6E1E1">
+
+    <View
+        android:id="@+id/backgroundView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#FAFAFA"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/fixedLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toTopOf="@id/backgroundView">
+
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:src="@drawable/add_bike_arrow_back" />
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="Order Detail"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fixedLayoutAlt"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#58F3C2"
+        app:layout_constraintTop_toBottomOf="@+id/backgroundView"
+        tools:layout_editor_absoluteX="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/leftTextOrder"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.5"
+                    android:gravity="center_vertical"
+                    android:text="Order is in Process"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/leftTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.5"
+                    android:gravity="center_vertical"
+                    android:text="Something going to mash here!"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:id="@+id/imageViewIcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:srcCompat="@drawable/iconorder" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fixedLayoutSubFolder"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fixedLayoutAlt">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/leftUpperTextView02"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.5"
+                    android:gravity="center_vertical"
+                    android:text="Address"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/leftTextName"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.5"
+                    android:gravity="center_vertical"
+                    android:text="Nguyen Hung Phong"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/leftTextPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.5"
+                    android:gravity="center_vertical"
+                    android:text="(+84)0374817238"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:orientation="vertical" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/layoutFrameAltSub"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="1dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fixedLayoutSubFolder">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imgProduct"
+                    android:layout_width="87dp"
+                    android:layout_height="84dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    tools:srcCompat="@tools:sample/avatars" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/rightTextBikeName"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.2"
+                    android:gravity="center_vertical"
+                    android:text="Honda Venus Cycle"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/rightTextBrand"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.1"
+                    android:gravity="center_vertical"
+                    android:text="HondaG9Den"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/rightTextPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.1"
+                    android:gravity="center_vertical"
+                    android:text="$59.000/Hour"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/leftUpperTextView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.5"
+                android:gravity="center_vertical"
+                android:text="Order is in Process"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/leftLowerTextView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.5"
+                android:gravity="center_vertical"
+                android:text="Something going to mash here!"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:srcCompat="@drawable/iconOrder" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/PaymentMode"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="1dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutFrameAltSub">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/leftTextNone01"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.05"
+                    android:gravity="center_vertical"
+                    android:text="Payment"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/leftTextNone02"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.05"
+                    android:gravity="center_vertical"
+                    android:text="Pay when get a product"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/DateLayout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="1dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutFrameAltSub">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/leftTextNone031"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.05"
+                    android:gravity="center_vertical"
+                    android:text="OrderID"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/leftTextNone041"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.05"
+                    android:gravity="center_vertical"
+                    android:text="StartDate"
+                    android:textColor="#000000"
+                    android:textSize="13dp" />
+
+                <TextView
+                    android:id="@+id/leftTextNone05"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.05"
+                    android:gravity="center_vertical"
+                    android:text="EndDate"
+                    android:textColor="#000000"
+                    android:textSize="13dp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/rightOrderIDGet"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.05"
+                    android:gravity="center_vertical"
+                    android:text="OrderID"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:ignore="RtlCompat" />
+
+                <TextView
+                    android:id="@+id/rightOrderStartDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.05"
+                    android:gravity="center_vertical"
+                    android:text="StartDate"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#000000"
+                    android:textSize="13dp"
+                    tools:ignore="RtlCompat" />
+
+                <TextView
+                    android:id="@+id/rightOrderEndate"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.05"
+                    android:gravity="center_vertical"
+                    android:text="EndDate"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#000000"
+                    android:textSize="13dp"
+                    tools:ignore="RtlCompat" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnEnterProcess"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:background="#F1E6E6"
+                android:text="Process" />
+
+            <Button
+                android:id="@+id/btnEnterCompleted"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:background="#F3E3E3"
+                android:text="Completed" />
+
+            <Button
+                android:id="@+id/btnEnterDenied"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:background="#CDA8A8"
+                android:text="Denied" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

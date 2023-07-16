@@ -1,23 +1,24 @@
 package com.example.prm392_group3.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Bike implements Serializable {
     String id, name, description, imageUrl;
     float pricePerHour;
-    boolean isAvailable;
     int quantity;
+
+    List<Float> ratingList;
 
     public Bike() {
     }
 
-    public Bike(String id, String name, String description, String imageUrl, float pricePerHour, boolean isAvailable, int quantity) {
+    public Bike(String id, String name, String description, String imageUrl, float pricePerHour, int quantity) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.imageUrl = imageUrl;
         this.pricePerHour = pricePerHour;
-        this.isAvailable = isAvailable;
         this.quantity = quantity;
     }
 
@@ -61,19 +62,19 @@ public class Bike implements Serializable {
         this.pricePerHour = pricePerHour;
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public void setAvailable(boolean available) {
-        isAvailable = available;
-    }
-
     public int getQuantity() {
         return quantity;
     }
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public List<Float> getRatingList() {
+        return ratingList;
+    }
+
+    public void setRatingList(List<Float> ratingList) {
+        this.ratingList = ratingList;
     }
 }
