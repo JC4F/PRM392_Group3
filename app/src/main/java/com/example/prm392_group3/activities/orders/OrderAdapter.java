@@ -40,7 +40,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 .placeholder(R.drawable.inventory)
                 .into(holder.imageView);
         holder.textViewName.setText(order.getBikeName());
-        holder.textViewBookID.setText("#QTK000" + String.valueOf(order.getBookID()));
+        holder.textViewCustomer.setText("#Customer: " + order.getUserName());
+        holder.textViewBookID.setText("#QTK0" + String.valueOf(order.getBookID()).substring(0, 6));
         holder.StartDate.setText("#Start Date: " + order.getStartDate());
         holder.EndDate.setText("#End Date: " + order.getEndDate());
         holder.Price.setText("#Price Per Hour: " + order.getTotalPrice() + "$");
@@ -58,6 +59,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     public class OrderViewHolder extends RecyclerView.ViewHolder{
         private ImageView imageView;
         private TextView textViewName;
+        private TextView textViewCustomer;
         private TextView textViewBookID;
         private TextView StartDate;
         private TextView EndDate;
@@ -66,6 +68,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageProduct);
+            textViewCustomer = itemView.findViewById(R.id.customerName);
             textViewName = itemView.findViewById(R.id.bikeName);
             textViewBookID = itemView.findViewById(R.id.bookID);
             StartDate = itemView.findViewById(R.id.startDateTextView);

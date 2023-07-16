@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/user_detail_btn"
+        app:layout_constraintBottom_toTopOf="@id/user_book_btn"
         app:layout_constraintTop_toTopOf="parent"
         android:background="#F1D2D2"
         android:padding="8dp">
@@ -113,7 +113,7 @@
             android:textStyle="bold"/>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/user_band_btn"
+            android:id="@+id/user_delete_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -126,7 +126,7 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/user_detail_btn"
+        android:id="@+id/user_book_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/store_item_btn"

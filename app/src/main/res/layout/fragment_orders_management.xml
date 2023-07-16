@@ -33,7 +33,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="625dp">
+        android:layout_height="610dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/mainContent"
@@ -149,55 +149,64 @@
                     android:orientation="horizontal">
 
                     <Button
+                        android:id="@+id/btnAll"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_marginTop="14dp"
                         android:layout_marginEnd="14dp"
                         android:layout_marginBottom="14dp"
-                        android:background="@android:color/transparent"
-                        android:backgroundTint="#E4E2E2"
-                        android:foreground="@drawable/rounded_border"
+                        android:background="@drawable/button_background"
                         android:outlineProvider="none"
                         android:text="All Orders"
-                        android:textColor="#171616" />
+                        android:textColor="#171616"/>
 
                     <Button
+                        android:id="@+id/btnPending"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_marginTop="14dp"
                         android:layout_marginEnd="14dp"
                         android:layout_marginBottom="14dp"
-                        android:background="@android:color/transparent"
-                        android:backgroundTint="#E4E2E2"
-                        android:foreground="@drawable/rounded_border"
+                        android:background="@drawable/button_background"
                         android:outlineProvider="none"
                         android:text="Pending"
                         android:textColor="#171616" />
 
                     <Button
+                        android:id="@+id/btnProcess"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_marginTop="14dp"
                         android:layout_marginEnd="14dp"
                         android:layout_marginBottom="14dp"
-                        android:background="@android:color/transparent"
-                        android:backgroundTint="#E4E2E2"
-                        android:foreground="@drawable/rounded_border"
+                        android:background="@drawable/button_background"
                         android:outlineProvider="none"
                         android:text="Process"
                         android:textColor="#171616" />
 
                     <Button
+                        android:id="@+id/btnCompleted"
                         android:layout_width="wrap_content"
                         android:layout_height="48dp"
                         android:layout_marginTop="14dp"
                         android:layout_marginEnd="14dp"
                         android:layout_marginBottom="14dp"
-                        android:background="@android:color/transparent"
-                        android:backgroundTint="#E4E2E2"
-                        android:foreground="@drawable/rounded_border"
+                        android:background="@drawable/button_background"
                         android:outlineProvider="none"
                         android:text="Completed"
+                        android:textColor="#171616" />
+
+                    <Button
+                        android:id="@+id/btnDenied"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginEnd="14dp"
+                        android:layout_marginBottom="14dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_background"
+                        android:outlineProvider="none"
+                        android:text="Denied"
                         android:textColor="#171616" />
 
                     <View
