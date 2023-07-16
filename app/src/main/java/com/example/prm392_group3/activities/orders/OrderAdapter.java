@@ -1,12 +1,20 @@
 package com.example.prm392_group3.activities.orders;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prm392_group3.R;
@@ -45,7 +53,18 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         holder.StartDate.setText("#Start Date: " + order.getStartDate());
         holder.EndDate.setText("#End Date: " + order.getEndDate());
         holder.Price.setText("#Price Per Hour: " + order.getTotalPrice() + "$");
-
+        holder.bookingStatus.setText("#Status: " + order.getBookingStatus());
+        holder.buttonDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = ((FragmentActivity) holder.itemView.getContext()).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                OrderDetail orderDetailFragment = OrderDetail.newInstance(order);
+                fragmentTransaction.replace(R.id.fragment_container, orderDetailFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
     }
 
     @Override
@@ -65,6 +84,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         private TextView EndDate;
         private TextView Price;
 
+        private Button buttonDetail;
+        private TextView bookingStatus;
+
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageProduct);
@@ -74,6 +96,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             StartDate = itemView.findViewById(R.id.startDateTextView);
             EndDate = itemView.findViewById(R.id.endDateTextView);
             Price = itemView.findViewById(R.id.totalPriceTextView);
+            buttonDetail = itemView.findViewById(R.id.btnDetailsOrder);
+            bookingStatus = itemView.findViewById(R.id.bookingStatus);
         }
     }
 }
