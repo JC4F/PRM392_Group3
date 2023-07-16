@@ -47,6 +47,7 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
     private Context context;
     DatabaseReference bikeRef;
     DatabaseReference bookRef;
+    DatabaseReference ratingRef;
 
     User userDetails;
 
@@ -66,6 +67,7 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
 
         bikeRef = FirebaseDatabase.getInstance().getReference("Bike");
         bookRef = FirebaseDatabase.getInstance().getReference("Book");
+        ratingRef = FirebaseDatabase.getInstance().getReference("Rating");
         bikeItemHolder = view.findViewById(R.id.bike_item_holder);
 
         return new ViewHolder(view);
@@ -204,6 +206,9 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
 
         loadingProgressBar.setVisibility(View.VISIBLE);
 
+        deleteRatingByBikeId(bikeId);
+        deleteBookByBikeId(bikeId);
+
         bikeRef.child(bikeId).removeValue(new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
@@ -243,6 +248,47 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(context, "Failed to delete order: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void deleteRatingByBikeId(String bikeId) {
+        Query query = ratingRef.orderByChild("bikeId").equalTo(bikeId);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Rating rating = snapshot.getValue(Rating.class);
+                    if (rating != null) {
+                        snapshot.getRef().removeValue();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(context, "Failed to delete ratins: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void deleteBookByBikeId(String bikeId) {
+        Query query = bookRef.orderByChild("bikeID").equalTo(bikeId);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Order order = snapshot.getValue(Order.class);
+                    if (order != null) {
+                        snapshot.getRef().removeValue();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(context, "Failed to delete book: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
