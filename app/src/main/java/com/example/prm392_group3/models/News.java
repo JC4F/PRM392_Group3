@@ -12,6 +12,8 @@ public class News {
     private String source;
     private String sourceUrl;
     private String image;
+    private String CreatedBy;
+
 
     /**
      * No args constructor for use in serialization
@@ -31,7 +33,7 @@ public class News {
      * @param title
      * @param url
      */
-    public News(String pid, Date postDate, String title, String url, String postContent, String source, String sourceUrl, String image) {
+    public News(String pid, Date postDate, String title, String url, String postContent, String source, String sourceUrl, String image, String CreatedBy) {
         super();
         this.pid = pid;
         this.postDate = postDate;
@@ -41,6 +43,8 @@ public class News {
         this.source = source;
         this.sourceUrl = sourceUrl;
         this.image = image;
+        this.CreatedBy = CreatedBy;
+
     }
 
     public String getPid() {
@@ -49,6 +53,13 @@ public class News {
 
     public void setPid(String pid) {
         this.pid = pid;
+    }
+    public String getCreatedBy() {
+        return CreatedBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.CreatedBy = createdBy;
     }
 
     public Date getPostDate() {
