@@ -179,7 +179,7 @@ public class Store extends Fragment {
             query = bikeRef.orderByChild("name").startAt(searchText).endAt(searchText + "\uf8ff");
         }
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikeList.clear();
