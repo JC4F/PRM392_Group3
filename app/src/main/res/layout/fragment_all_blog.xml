@@ -19,24 +19,23 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="313dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="10"
                 android:background="@color/white"
                 android:padding="10dp"
-                android:text="NEWS"
+                android:text="MY NEWS"
+                android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
-            <Button
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnInsert"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_row="0"
-                android:layout_column="1"
-                android:contentDescription="Add News"
-                android:paddingRight="20dp"
-                android:text="Add news" />
+                android:layout_gravity="bottom|end"
+                android:contentDescription="Add Bike"
+                android:src="@drawable/store_add_24" />
             <!--        <Button-->
             <!--            android:id="@+id/aboutUs"-->
             <!--            android:layout_width="48dp"-->
@@ -53,22 +52,22 @@
         </LinearLayout>
 
         <GridLayout
-            android:layout_width="match_parent"
+            android:layout_width="411dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:columnCount="3"
+            android:columnCount="2"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:rowCount="2">
 
             <EditText
                 android:id="@+id/etQuery"
-                android:layout_width="260dp"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_row="0"
                 android:layout_column="0"
-                android:ems="10"
                 android:layout_marginRight="10dp"
+                android:ems="10"
                 android:hint="Search"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
@@ -84,17 +83,6 @@
                 android:paddingRight="20dp"
                 android:text="Search" />
 
-            <ImageButton
-                android:id="@+id/buttonFilter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_row="0"
-                android:layout_column="2"
-                android:background="?attr/selectableItemBackground"
-                android:contentDescription="Filter"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
-                android:src="@drawable/store_filter_alt_24" />
 
         </GridLayout>
 
@@ -109,6 +97,7 @@
                 android:layout_marginTop="5dp" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
     </LinearLayout>
 </FrameLayout>
