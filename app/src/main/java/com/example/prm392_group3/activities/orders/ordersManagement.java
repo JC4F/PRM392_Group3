@@ -1,10 +1,20 @@
 package com.example.prm392_group3.activities.orders;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -38,10 +48,7 @@ public class ordersManagement extends Fragment {
     private DatabaseReference fbDatabase;
     private List<Order> orderList;
     private boolean isDataLoaded = false;
-    private Fragment fragment;
-    public ordersManagement() {
-        // Required empty public constructor
-    }
+    public ordersManagement() {}
 
     public static ordersManagement newInstance(String param1, String param2) {
         ordersManagement fragment = new ordersManagement();
@@ -71,6 +78,52 @@ public class ordersManagement extends Fragment {
 
         layout.setVisibility(View.INVISIBLE);
         shimmerLayout.startShimmer();
+        loadDataView();
+        buttonEvent(view);
+        ImageView searchIcon = view.findViewById(R.id.SearchIcon);
+        searchIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSearchDialog(Gravity.TOP);
+            }
+        });
+        return view;
+    }
+
+    private void showSearchDialog(int gravity) {
+        Dialog dialog = new Dialog(requireContext());
+        dialog.setContentView(R.layout.item_searchbar);
+
+        EditText searchEditText = dialog.findViewById(R.id.searchEditText);
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String searchText = s.toString();
+                searchData(searchText, new OrderCallback() {
+                    @Override
+                    public void onOrdersLoaded(List<Order> orders) {
+                    }
+                });
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        Window window = dialog.getWindow();
+        if (window == null) {
+            return;
+        }
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = gravity;
+        window.setAttributes(windowAttributes);
+        dialog.show();
+    }
+
+    private void loadDataView(){
         if (!isDataLoaded) {
             listAllData(new OrderCallback() {
                 @Override
@@ -89,8 +142,70 @@ public class ordersManagement extends Fragment {
             shimmerLayout.setVisibility(View.INVISIBLE);
             layout.setVisibility(View.VISIBLE);
         }
+    }
 
-        return view;
+    private void buttonEvent(View view){
+        Button btnAll = view.findViewById(R.id.btnAll);
+        Button btnPending = view.findViewById(R.id.btnPending);
+        Button btnProcess = view.findViewById(R.id.btnProcess);
+        Button btnCompleted = view.findViewById(R.id.btnCompleted);
+        Button btnDenied = view.findViewById(R.id.btnDenied);
+
+        btnAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchData("", new OrderCallback() {
+                    @Override
+                    public void onOrdersLoaded(List<Order> orders) {
+                    }
+                });
+            }
+        });
+
+        btnPending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchData("", new OrderCallback() {
+                    @Override
+                    public void onOrdersLoaded(List<Order> orders) {
+                        showOrderList();
+                    }
+                });
+            }
+        });
+
+        btnProcess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchData("Process", new OrderCallback() {
+                    @Override
+                    public void onOrdersLoaded(List<Order> orders) {
+                    }
+                });
+            }
+        });
+
+        btnCompleted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchData("Completed", new OrderCallback() {
+                    @Override
+                    public void onOrdersLoaded(List<Order> orders) {
+                    }
+                });
+            }
+        });
+
+        btnDenied.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchData("Denied", new OrderCallback() {
+                    @Override
+                    public void onOrdersLoaded(List<Order> orders) {
+                    }
+                });
+            }
+        });
     }
 
     private void showOrderList() {
@@ -109,6 +224,32 @@ public class ordersManagement extends Fragment {
 
     public interface OrderCallback {
         void onOrdersLoaded(List<Order> orders);
+    }
+
+    private void searchData(String keyword, OrderCallback callback) {
+        if (keyword.isEmpty() || keyword == "") {
+            listAllData(new OrderCallback() {
+                @Override
+                public void onOrdersLoaded(List<Order> orders) {
+                    adapter.setData(orders);
+                    adapter.notifyDataSetChanged();
+                }
+            });            return;
+        }
+
+        List<Order> searchResults = new ArrayList<>();
+
+        for (Order order : orderList) {
+            if (order.getBikeName() != null && order.getBikeName().toLowerCase().contains(keyword.toLowerCase())
+                    || order.getBookID() != null && order.getBookID().toLowerCase().contains(keyword.toLowerCase())
+                    || order.getBookingStatus() != null && order.getBookingStatus().toLowerCase().contains(keyword.toLowerCase())) {
+                searchResults.add(order);
+            }
+        }
+
+        callback.onOrdersLoaded(searchResults);
+        adapter.setData(searchResults);
+        adapter.notifyDataSetChanged();
     }
 
     private void listAllData(OrderCallback callback) {
@@ -169,8 +310,6 @@ public class ordersManagement extends Fragment {
                                 future.completeExceptionally(databaseError.toException());
                             }
                         });
-
-                        //order.setResourceID(R.drawable.default_avatar);
                         order.setBookID(bookSnapshot.child("bookID").getValue(String.class));
                         order.setBikeID(bikeID);
                         order.setBookingStatus(bookSnapshot.child("bookingStatus").getValue(String.class));
@@ -192,5 +331,7 @@ public class ordersManagement extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) { }
         });
+
+
     }
 }
