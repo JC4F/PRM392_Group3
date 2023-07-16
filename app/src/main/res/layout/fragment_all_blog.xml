@@ -25,7 +25,7 @@
                 android:layout_weight="10"
                 android:background="@color/white"
                 android:padding="10dp"
-                android:text="MY NEWS"
+                android:text="MY BLOGS"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="20sp"
