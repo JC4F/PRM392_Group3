@@ -199,18 +199,33 @@
 
             <RatingBar
                 android:id="@+id/bikedt_rating"
-                android:layout_width="234dp"
-                android:layout_height="57dp"
+                android:layout_width="244dp"
+                android:layout_height="51dp"
+                android:layout_marginStart="-50dp"
                 android:layout_marginTop="28dp"
                 android:contentDescription="Rating Bike"
                 android:rating="0"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.883"
-                app:layout_constraintStart_toStartOf="@id/bikedt_tv_ratings"
-                app:layout_constraintTop_toTopOf="parent"
-                android:visibility="invisible"/>
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                android:textAlignment="viewStart"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toStartOf="@+id/bikedt_btn_refresh"
+                app:layout_constraintStart_toEndOf="@+id/bikedt_tv_ratings"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <!-- Edit text for bike description -->
+
+            <ImageView
+                android:id="@+id/bikedt_btn_refresh"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="Refresh"
+                android:src="@drawable/baseline_refresh_24"
+                app:layout_constraintEnd_toEndOf="@+id/bikedt_cs_rating_wrapper"
+                app:layout_constraintTop_toTopOf="@+id/bikedt_cs_rating_wrapper" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/bikedt_ratings_description_layout"
                 style="@style/TextInputLayoutStyle"

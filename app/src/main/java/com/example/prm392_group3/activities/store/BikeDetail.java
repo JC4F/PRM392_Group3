@@ -79,6 +79,7 @@ public class BikeDetail extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     boolean isFirstKey = false;
+    private ImageView refreshBtn;
 
 
     @Override
@@ -112,6 +113,7 @@ public class BikeDetail extends AppCompatActivity {
         submitRatingBtn = findViewById(R.id.bikedt_submit_button);
         loadMoreBtn = findViewById(R.id.bikedt_loadmore_button);
         pbLoadMore = findViewById(R.id.bikedt_pb_loadmore);
+        refreshBtn = findViewById(R.id.bikedt_btn_refresh);
         pbRating = findViewById(R.id.bikedt_pb_rating);
         tvNotRating = findViewById(R.id.bikedt_tv_no_one_ratings);
 
@@ -315,6 +317,18 @@ public class BikeDetail extends AppCompatActivity {
                     showDeleteOrderConfirmationDialog(bike.getId());
             }
         });
+
+        refreshBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lastRatingKey = null;
+                isFirstKey = false;
+                countLoadMore =  -1;
+                ratingList.clear();
+                ratingAdapter.notifyDataSetChanged();
+                getInitialRatings();
+            }
+        });
     }
 
     private void handleBooking(Bike bike) {
@@ -497,7 +511,6 @@ public class BikeDetail extends AppCompatActivity {
 
     private void getInitialRatings() {
         loadMoreRatings(true);
-
     }
 
     private void loadMoreRatings(boolean isInit) {
@@ -510,14 +523,19 @@ public class BikeDetail extends AppCompatActivity {
 
         Query query;
         if (isInit) {
-            query = ratingRef.orderByKey().limitToLast(PAGE_SIZE + 1);
+            query = ratingRef.orderByChild("bikeId").equalTo(bike.getId()).limitToLast(PAGE_SIZE + 1);
         } else {
-            query = ratingRef.orderByKey().endBefore(lastRatingKey).limitToLast(PAGE_SIZE + 1);
+            query = ratingRef.orderByChild("bikeId")
+                    .endBefore(bike.getId(), lastRatingKey)
+                    .limitToLast(PAGE_SIZE + 1);
+
         }
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                pbLoadMore.setVisibility(View.VISIBLE);
+                tvNotRating.setVisibility(View.GONE);
                 if (dataSnapshot.exists()) {
                     int countSuitableData = 0;
                     isFirstKey = false;

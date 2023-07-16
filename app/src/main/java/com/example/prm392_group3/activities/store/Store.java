@@ -152,6 +152,7 @@ public class Store extends Fragment {
                     }
                 }
                 bike.setRatingList(ratingList);
+                bikeList.removeIf(bikeTmp -> bikeTmp.getId().equals(bike.getId()));
                 bikeList.add(bike);
                 bikeAdapter.notifyDataSetChanged();
 
@@ -178,7 +179,7 @@ public class Store extends Fragment {
             query = bikeRef.orderByChild("name").startAt(searchText).endAt(searchText + "\uf8ff");
         }
 
-        query.addValueEventListener(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bikeList.clear();
