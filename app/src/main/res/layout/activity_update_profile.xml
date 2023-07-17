@@ -24,7 +24,7 @@
             android:id="@+id/updateUsername"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="28dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView" android:textColor="#000000"/>
+            app:layout_constraintTop_toBottomOf="@+id/textView" android:textColor="#000000" android:hint="Username"/>
     <TextView
             android:text="Update Profile"
             android:layout_width="wrap_content"
@@ -42,7 +42,7 @@
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="19dp"
             app:layout_constraintTop_toBottomOf="@+id/updateUsername" android:textColor="#000000"
-            android:text="Email"/>
+            android:text="Email" android:hint="Email"/>
     <EditText
             android:layout_width="307dp"
             android:layout_height="44dp"
@@ -51,7 +51,8 @@
             android:id="@+id/updatePhonenumber"
             android:text="Phone Number" android:textColor="#000000" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="28dp" app:layout_constraintTop_toBottomOf="@+id/updateEmail"/>
+            android:layout_marginTop="28dp" app:layout_constraintTop_toBottomOf="@+id/updateEmail"
+            android:hint="Phonen Number"/>
     <Button
             android:text="Save"
             android:layout_width="wrap_content"
