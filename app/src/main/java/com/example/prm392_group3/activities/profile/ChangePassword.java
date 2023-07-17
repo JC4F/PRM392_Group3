@@ -11,11 +11,13 @@ import android.os.Bundle;
 import com.example.prm392_group3.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.core.Tag;
 
 public class ChangePassword extends AppCompatActivity {
-
 
 
     @Override
@@ -25,9 +27,10 @@ public class ChangePassword extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         EditText txtPassword = findViewById(R.id.txtChangePassword);
+        EditText currentPassword = findViewById(R.id.txtOldPassword);
 
         Button btn = findViewById(R.id.btnChangePassword);
-        btn.setOnClickListener(new View.OnClickListener() {
+        /*btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 user.updatePassword(txtPassword.toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -41,7 +44,36 @@ public class ChangePassword extends AppCompatActivity {
                 });
 
             }
+        });*/
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = user.getEmail().toString();
+                AuthCredential credential = EmailAuthProvider
+                        .getCredential(email, txtPassword.getText().toString());
+
+                user.reauthenticate(credential)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Log.d("Authen", "User re-authenticated.");
+                            }
+                        });
+                String newPassword = txtPassword.getText().toString();
+                user.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("Change password", "User password updated.");
+                        } else {
+                            Log.d("Change password", "Error password not updated");
+                        }
+                    }
+                });
+            }
         });
+
 
     }
 }
