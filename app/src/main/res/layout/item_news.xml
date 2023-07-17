@@ -16,7 +16,7 @@
 
         <ImageView
             android:id="@+id/news_image"
-            android:layout_width="121dp"
+            android:layout_width="171dp"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:padding="10dp"
@@ -27,7 +27,7 @@
             android:id="@+id/news_date"
             android:layout_width="105dp"
             android:layout_height="41dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="40dp"
             android:layout_marginTop="95dp"
             android:paddingEnd="10dp"
             android:text="Date"

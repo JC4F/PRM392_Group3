@@ -33,13 +33,21 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class NewsDetail extends AppCompatActivity {
     DatabaseReference myRef;
+    DatabaseReference userRef;
+
     FirebaseDatabase database;
     private ImageView backButton;
     User userDetails;
     TextView newsTitle;
+    TextView category;
+    TextView date;
+
+
     TextView source;
     ImageView newsImage;
     TextView newsContent;
@@ -56,12 +64,17 @@ News cNews;
         backButton = findViewById(R.id.backButton);
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("News");
+        userRef = database.getReference("User");
+
         userDetails = ObjectStorageUtil.loadObject(NewsDetail.this, "user_data.json", User.class);
         Query query = myRef.orderByChild("pid").equalTo(newsId);
         newsTitle = findViewById(R.id.newsTitle);
         source = findViewById(R.id.source);
         newsImage = findViewById(R.id.newsImage);
         newsContent = findViewById(R.id.newsContent);
+        category = findViewById(R.id.etCategory);
+        date = findViewById(R.id.date);
+
         updateBtn = findViewById(R.id.updatebtn);
         deleteBtn = findViewById(R.id.deletebtn);
         query.addValueEventListener(new ValueEventListener() {
@@ -79,8 +92,34 @@ News cNews;
 
                     cNews = news;
                     if (news != null) {
+                        Query userQuery = userRef.orderByChild("id").equalTo(news.getCreatedBy());
+                        userQuery.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                                    User user = userSnapshot.getValue(User.class);
+                                    if (user != null) {
+                                        // Here, you have access to the user with the ID news.getCreatedBy()
+                                        // You can do something with the user object
+                                        // For example, set the source TextView to the user's name
+                                        source.setText("By "+user.getUsername());
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                Toast.makeText(NewsDetail.this, "Failed to load user details", Toast.LENGTH_SHORT).show();
+                                source.setText("By "+"?");
+
+                            }
+                        });
                         newsTitle.setText(news.getTitle());
-                        source.setText(news.getCategory());
+                        category.setText(news.getCategory());
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a, EEEE, dd MMM yyyy", Locale.ENGLISH);
+                        String formattedDate = dateFormat.format(news.getPostDate());
+
+                        date.setText("Created at "+formattedDate);
                         // Load the news image using a library like Picasso or Glide
                         // Example with Picasso:
                         Picasso.get().load(news.getImage()).into(newsImage);
@@ -118,7 +157,6 @@ News cNews;
             }
         });
         // Do something with the news ID (e.g., display it in a TextView)
-        Toast.makeText(this, "News ID: " + newsId, Toast.LENGTH_SHORT).show();
 
     }
     private void showDeleteConfirmationDialog(News news) {

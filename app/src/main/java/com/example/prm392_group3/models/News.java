@@ -80,10 +80,10 @@ public class News implements Serializable {
     }
 
     public String getHashtag() {
-        return "#"+hashtag.toUpperCase();
+        return hashtag.toUpperCase();
     }
     public String getSourceHashtag() {
-        return hashtag.toUpperCase();
+        return "#"+hashtag.toUpperCase();
     }
 
     public void setHashtag(String hashtag) {
