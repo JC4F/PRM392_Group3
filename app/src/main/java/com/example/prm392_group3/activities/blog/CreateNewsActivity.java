@@ -71,6 +71,7 @@ public class CreateNewsActivity extends AppCompatActivity {
         etSourceURL = findViewById(R.id.etSourceURL);
         etImageURL = findViewById(R.id.etImageURL);
         btnSubmit = findViewById(R.id.btnSubmit);
+        titleMain = findViewById(R.id.titleMain);
         if (cNews != null) {
             etTitle.setText(cNews.getTitle());
             etURL.setText(cNews.getHashtag());
