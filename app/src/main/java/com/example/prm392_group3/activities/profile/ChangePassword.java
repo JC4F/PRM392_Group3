@@ -1,5 +1,6 @@
 package com.example.prm392_group3.activities.profile;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.prm392_group3.R;
+import com.example.prm392_group3.activities.MainActivity;
+import com.example.prm392_group3.activities.authen.Login;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -66,9 +69,12 @@ public class ChangePassword extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Log.d("Change password", "User password updated.");
-                        } else {
-                            Log.d("Change password", "Error password not updated");
                         }
+                        Toast.makeText(getApplicationContext(), "Update password success", Toast.LENGTH_SHORT).show();
+                        FirebaseAuth.getInstance().signOut();
+                        Intent intent = new Intent(ChangePassword.this, Login.class);
+                        startActivity(intent);
+                        finish();
                     }
                 });
             }
