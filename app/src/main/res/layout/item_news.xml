@@ -4,20 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
-    android:layout_margin="5dp"
+    android:layout_margin="10dp"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
     android:orientation="vertical">
 
     <RelativeLayout
-        android:background="@color/app_weak_blue"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="86dp"
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/news_image"
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="106dp"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
             android:src="@drawable/icn6" />
@@ -27,7 +27,9 @@
             android:id="@+id/news_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
+
             android:layout_toEndOf="@id/news_image"
             android:layout_toRightOf="@+id/news_image"
             android:lineSpacingExtra="5dp"
@@ -37,7 +39,7 @@
             android:paddingRight="10dp"
             android:text="Title"
             android:textColor="#000"
-            android:textSize="18sp"
+            android:textSize="13sp"
             android:textStyle="bold" />
 
 
@@ -46,6 +48,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/news_title"
+            android:layout_marginLeft="20dp"
+
             android:layout_marginTop="5dp"
             android:layout_marginRight="4dp"
             android:layout_toEndOf="@id/news_image"
@@ -61,9 +65,11 @@
 
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+
             android:layout_height="wrap_content"
             android:layout_below="@id/news_desc"
+            android:layout_marginLeft="22dp"
             android:layout_marginTop="4dp"
             android:layout_toRightOf="@id/news_image">
 
@@ -72,10 +78,11 @@
                 android:id="@+id/news_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="10dp"
                 android:paddingEnd="10dp"
+
                 android:paddingRight="5dp"
-                android:text="Date" />
+                android:text="Date"
+                android:textColor="#000" />
 
             <TextView
                 android:id="@+id/news_source"
@@ -86,7 +93,8 @@
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:paddingRight="5dp"
-                android:text="Source" />
+                android:text="Source"
+                android:textColor="#000" />
 
             <TextView
                 android:id="@+id/news_view"
@@ -96,7 +104,8 @@
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:paddingRight="5dp"
-                android:text="100 views" />
+                android:text="100 views"
+                android:textColor="#000" />
 
 
         </RelativeLayout>

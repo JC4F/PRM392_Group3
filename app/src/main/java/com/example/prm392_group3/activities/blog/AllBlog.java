@@ -26,6 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import com.example.prm392_group3.adapters.NewsAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -84,7 +85,7 @@ public class AllBlog extends Fragment {
     }
     private boolean isDataLoaded = false;
     DatabaseReference newsRef;
-    private Button addNewsButton;
+    private FloatingActionButton addNewsButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -126,9 +127,9 @@ public class AllBlog extends Fragment {
         Calendar calendar = Calendar.getInstance();
         Date currentDate = calendar.getTime();
 
-        newsList.add(new News("1", currentDate, "Exciting News 1", "https://example.com/news1", "This is the content of News 1", "News Source 1", "https://example.com/source1", "news1_image.jpg"));
-        newsList.add(new News("2", currentDate, "Breaking News 2", "https://example.com/news2", "This is the content of News 2", "News Source 2", "https://example.com/source2", "news2_image.jpg"));
-        newsList.add(new News("3", currentDate, "Latest News 3", "https://example.com/news3", "This is the content of News 3", "News Source 3", "https://example.com/source3", "news3_image.jpg"));
+//        newsList.add(new News("1", currentDate, "Exciting News 1", "https://example.com/news1", "This is the content of News 1", "News Source 1", "https://example.com/source1", "news1_image.jpg"));
+//        newsList.add(new News("2", currentDate, "Breaking News 2", "https://example.com/news2", "This is the content of News 2", "News Source 2", "https://example.com/source2", "news2_image.jpg"));
+//        newsList.add(new News("3", currentDate, "Latest News 3", "https://example.com/news3", "This is the content of News 3", "News Source 3", "https://example.com/source3", "news3_image.jpg"));
         // ...
 
         adapter = new NewsAdapter(newsList);

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.prm392_group3.R;
 import com.example.prm392_group3.activities.MainActivity;
+import com.example.prm392_group3.activities.admin.AccountManagement;
 import com.example.prm392_group3.models.User;
 import com.example.prm392_group3.utils.ObjectStorageUtil;
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
@@ -128,11 +129,19 @@ public class Login extends AppCompatActivity {
 
                                                 if (userData != null) {
                                                     ObjectStorageUtil.saveObject(getApplicationContext(), "user_data.json", userData);
+                                                    if (userData.isRole() != true){
+                                                        Intent intent = new Intent(Login.this, AccountManagement.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                    else{
+                                                        // Chuyển sang MainActivity
+                                                        Intent intent = new Intent(Login.this, MainActivity.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
 
-                                                    // Chuyển sang MainActivity
-                                                    Intent intent = new Intent(Login.this, MainActivity.class);
-                                                    startActivity(intent);
-                                                    finish();
+
                                                 }
                                             }
                                         }
