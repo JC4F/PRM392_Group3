@@ -79,7 +79,7 @@ public class CreateNewsActivity extends AppCompatActivity {
             etSourceURL.setText(String.valueOf(cNews.getHashtag()));
             etImageURL.setText(String.valueOf(cNews.getImage()));
             updateID = cNews.getPid();
-            titleMain.setText("Update News");
+            titleMain.setText("UPDATE BLOGS");
 
         }
         btnSubmit.setOnClickListener(new View.OnClickListener() {
