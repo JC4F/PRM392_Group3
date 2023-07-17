@@ -70,15 +70,18 @@ News cNews;
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     News news = snapshot.getValue(News.class);
-                    if (news.getCreatedBy() == userDetails.getId()) {
-                        deleteBtn.setVisibility(View.VISIBLE);
-                        updateBtn.setVisibility(View.VISIBLE);
+                    if(news.getCreatedBy()!=null){
+                        if (news.getCreatedBy().equals(userDetails.getId())) {
+                            deleteBtn.setVisibility(View.VISIBLE);
+                            updateBtn.setVisibility(View.VISIBLE);
+                        }
                     }
+
 
                     cNews = news;
                     if (news != null) {
                         newsTitle.setText(news.getTitle());
-                        source.setText(news.getSource());
+                        source.setText(news.getCategory());
                         // Load the news image using a library like Picasso or Glide
                         // Example with Picasso:
                         Picasso.get().load(news.getImage()).into(newsImage);
