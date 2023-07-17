@@ -80,8 +80,8 @@
             android:background="@color/app_weak_blue"
             android:text="Delete"
             android:textColor="@color/app_black"
-            android:textStyle="bold"
-             />
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
