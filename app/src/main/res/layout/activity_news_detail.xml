@@ -81,7 +81,7 @@
     <ImageView
         android:id="@+id/newsImage"
         android:layout_width="match_parent"
-        android:layout_height="163dp"
+        android:layout_height="133dp"
 
         android:layout_marginTop="16dp"
         android:scaleType="centerCrop" />
@@ -89,12 +89,64 @@
     <TextView
         android:id="@+id/newsContent"
         android:layout_width="381dp"
-        android:layout_height="287dp"
+        android:layout_height="136dp"
 
         android:layout_marginTop="16dp"
         android:text="News Content"
         android:textColor="@color/black" />
+    <TextView
+        android:id="@+id/comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
 
+        android:text="List comments: "
+        android:textSize="12sp"
+        android:layout_marginTop="2dp" />
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:fillViewport="true">
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recy_comments"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.core.widget.NestedScrollView>
+    <TextView
+        android:id="@+id/yourcommenttitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+
+        android:text="Your comment: "
+        android:textSize="12sp"
+        android:layout_marginTop="2dp" />
+    <EditText
+        android:id="@+id/userComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Comment"
+        android:inputType="textUri"
+        android:minHeight="48dp"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/btnAddComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="?android:attr/textColorLinkInverse"
+        android:text="Add comment"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
     <LinearLayout
         android:id="@+id/bikedt_ln_btn"
         android:layout_width="300dp"
@@ -103,7 +155,7 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:layout_gravity="center"
-
+    android:layout_marginTop="5dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatButton
@@ -112,11 +164,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
             android:layout_weight="1"
-            android:text="Update"
+            android:text="Update News"
             android:background="@color/light_blue_shade"
             android:elevation="4dp"
-            android:textColor="@color/app_black"
-            android:textStyle="bold"
+            android:textColor="@color/black"
             android:visibility="visible" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -127,10 +178,9 @@
             android:elevation="4dp"
             android:background="@color/light_blue_shade"
             android:layout_weight="1"
-            android:text="Delete"
-            android:textColor="@color/app_black"
+            android:text="Delete News"
+            android:textColor="@color/black"
             android:textSize="14sp"
-            android:textStyle="bold"
             android:visibility="visible" />
 
     </LinearLayout>

@@ -77,7 +77,7 @@
 
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="187dp"
 
             android:layout_height="wrap_content"
             android:layout_below="@id/news_desc"
@@ -90,23 +90,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/yellow"
+                android:maxWidth="100dp"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:paddingRight="5dp"
                 android:text="100 views"
                 android:textColor="#000" />
+
             <TextView
                 android:id="@+id/news_source"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/news_view"
+                android:maxWidth="110dp"
                 android:paddingEnd="10dp"
                 android:paddingRight="5dp"
                 android:text="Source"
-                android:layout_toRightOf="@id/news_view"
-                android:layout_marginLeft="20dp"
                 android:textColor="#000" />
-
-
 
 
         </RelativeLayout>
