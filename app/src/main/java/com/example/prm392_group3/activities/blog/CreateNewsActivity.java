@@ -64,19 +64,19 @@ public class CreateNewsActivity extends AppCompatActivity {
         });
 
         etTitle = findViewById(R.id.etTitle);
-        etURL = findViewById(R.id.etURL);
+        etURL = findViewById(R.id.etHashtag);
         etPostContent = findViewById(R.id.etPostContent);
-        etSource = findViewById(R.id.etSource);
+        etSource = findViewById(R.id.etCategory);
         etSourceURL = findViewById(R.id.etSourceURL);
         etImageURL = findViewById(R.id.etImageURL);
         btnSubmit = findViewById(R.id.btnSubmit);
         if (cNews != null) {
             titleMain.setText("Update Bike");
             etTitle.setText(cNews.getTitle());
-            etURL.setText(cNews.getUrl());
+            etURL.setText(cNews.getHashtag());
             etPostContent.setText(cNews.getPostContent());
-            etSource.setText(String.valueOf(cNews.getSource()));
-            etSourceURL.setText(String.valueOf(cNews.getSourceUrl()));
+            etSource.setText(String.valueOf(cNews.getCategory()));
+            etSourceURL.setText(String.valueOf(cNews.getHashtag()));
             etImageURL.setText(String.valueOf(cNews.getImage()));
 
 
