@@ -64,7 +64,6 @@ News cNews;
         newsContent = findViewById(R.id.newsContent);
         updateBtn = findViewById(R.id.updatebtn);
         deleteBtn = findViewById(R.id.deletebtn);
-        cNews = (News) getIntent().getSerializableExtra("News");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -107,7 +106,7 @@ News cNews;
             public void onClick(View view) {
                 // Chuyển sang trang mới và truyền mô hình Bike qua Intent
                 Intent intent = new Intent(NewsDetail.this, CreateNewsActivity.class);
-                intent.putExtra("News", (Serializable) cNews);
+                intent.putExtra("News",  cNews);
                 startActivity(intent);
             }
         });

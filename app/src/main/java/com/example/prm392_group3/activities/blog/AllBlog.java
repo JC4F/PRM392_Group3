@@ -147,7 +147,7 @@ public class AllBlog extends Fragment {
 //        newsList.add(new News("3", currentDate, "Latest News 3", "https://example.com/news3", "This is the content of News 3", "News Source 3", "https://example.com/source3", "news3_image.jpg"));
         // ...
 
-        adapter = new NewsAdapter(newsList);
+        adapter = new NewsAdapter(newsList, getContext());
         Log.i("info",""+recyclerView);
         recyclerView.setAdapter(adapter);
 

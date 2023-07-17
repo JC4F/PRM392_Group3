@@ -24,9 +24,11 @@ import java.util.Locale;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
     private List<News> newsList;  // Assuming you have a list of NewsItem objects
+    private  Context context;
 
-    public NewsAdapter(List<News> newsList) {
+    public NewsAdapter(List<News> newsList, Context context) {
         this.newsList = newsList;
+        this.context = context;
     }
 
     @NonNull
@@ -49,12 +51,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         holder.newsDate.setText(formattedDate);
         holder.newsSource.setText(newsItem.getCategory());
         holder.newsView.setText(newsItem.getHashtag());
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Open the detail page for the selected news item
-                Context context = holder.itemView.getContext();
+//                Context context = holder.itemView.getContext();
                 Intent intent = new Intent(context, NewsDetail.class);
                 intent.putExtra("newsId", newsItem.getPid()); // Pass any necessary data to the detail activity
                 context.startActivity(intent);
