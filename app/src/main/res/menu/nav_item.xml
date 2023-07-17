@@ -17,6 +17,16 @@
         app:cnb_textColor="#ffffff" />
 
     <item
+        android:id="@+id/ordersManagement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/booking_24"
+        android:title="Orders"
+        app:cnb_backgroundColor="@color/app_strong_blue"
+        app:cnb_iconColor="#ffffff"
+        app:cnb_textColor="#ffffff"/>
+
+    <item
         android:id="@+id/blog"
         android:icon="@drawable/blog_24"
         android:title="Blog"
@@ -29,15 +39,6 @@
         android:icon="@drawable/user_24"
         android:title="Profile"
         app:cnb_backgroundColor="@color/app_strong_blue"
-        app:cnb_iconColor="#ffffff"
         app:cnb_textColor="#ffffff" />
-    <item
-        android:id="@+id/ordersManagement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:icon="@drawable/user_24"
-        android:title="Orders"
-        app:cnb_backgroundColor="@color/app_strong_blue"
-        app:cnb_iconColor="#ffffff"
-        app:cnb_textColor="#ffffff" />
+
 </menu>
