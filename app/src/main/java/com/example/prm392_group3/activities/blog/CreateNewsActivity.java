@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,9 @@ public class CreateNewsActivity extends AppCompatActivity {
     private EditText etPostContent;
     private EditText etSource;
     private EditText etSourceURL;
+
+    private TextView titleMain;
+
     private EditText etImageURL;
     private Button btnSubmit;
     private News cNews;
@@ -66,7 +70,17 @@ public class CreateNewsActivity extends AppCompatActivity {
         etSourceURL = findViewById(R.id.etSourceURL);
         etImageURL = findViewById(R.id.etImageURL);
         btnSubmit = findViewById(R.id.btnSubmit);
+        if (cNews != null) {
+            titleMain.setText("Update Bike");
+            etTitle.setText(cNews.getTitle());
+            etURL.setText(cNews.getUrl());
+            etPostContent.setText(cNews.getPostContent());
+            etSource.setText(String.valueOf(cNews.getSource()));
+            etSourceURL.setText(String.valueOf(cNews.getSourceUrl()));
+            etImageURL.setText(String.valueOf(cNews.getImage()));
 
+
+        }
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

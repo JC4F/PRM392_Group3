@@ -63,12 +63,13 @@
             android:id="@+id/updatebtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Update"
-            android:background="@color/app_weak_blue"
             android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:background="@color/app_weak_blue"
+            android:text="Update"
             android:textColor="@color/app_black"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+             />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/deletebtn"
@@ -79,7 +80,8 @@
             android:background="@color/app_weak_blue"
             android:text="Delete"
             android:textColor="@color/app_black"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+             />
 
     </LinearLayout>
 

@@ -65,19 +65,25 @@ News cNews;
         updateBtn = findViewById(R.id.updatebtn);
         deleteBtn = findViewById(R.id.deletebtn);
         cNews = (News) getIntent().getSerializableExtra("News");
-
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                News news = dataSnapshot.getValue(News.class);
-                cNews = news;
-                if (news != null) {
-                    newsTitle.setText(news.getTitle());
-                    source.setText(news.getSource());
-                    // Load the news image using a library like Picasso or Glide
-                    // Example with Picasso:
-                    Picasso.get().load(news.getImage()).into(newsImage);
-                    newsContent.setText(news.getPostContent());
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    News news = snapshot.getValue(News.class);
+                    if (news.getCreatedBy() == userDetails.getId()) {
+                        deleteBtn.setVisibility(View.VISIBLE);
+                        updateBtn.setVisibility(View.VISIBLE);
+                    }
+
+                    cNews = news;
+                    if (news != null) {
+                        newsTitle.setText(news.getTitle());
+                        source.setText(news.getSource());
+                        // Load the news image using a library like Picasso or Glide
+                        // Example with Picasso:
+                        Picasso.get().load(news.getImage()).into(newsImage);
+                        newsContent.setText(news.getPostContent());
+                    }
                 }
             }
 
