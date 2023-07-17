@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -108,6 +109,18 @@ public class AllBlog extends Fragment {
         View view = inflater.inflate(R.layout.fragment_all_blog, container, false);
         etQuery = view.findViewById(R.id.etQuery);
         btnSearch = view.findViewById(R.id.btnSearch);
+        ImageView searchIcon = view.findViewById(R.id.searchIcon);
+        GridLayout searchField = view.findViewById(R.id.searchField);
+        searchIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (searchField.getVisibility() == View.VISIBLE) {
+                    searchField.setVisibility(View.GONE); // Hide searchField
+                } else {
+                    searchField.setVisibility(View.VISIBLE); // Show searchField
+                }
+            }
+        });
 
         addNewsButton = view.findViewById(R.id.btnInsert);
         btnSearch.setOnClickListener(new View.OnClickListener() {

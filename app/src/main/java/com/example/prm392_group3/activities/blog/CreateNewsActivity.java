@@ -73,12 +73,13 @@ public class CreateNewsActivity extends AppCompatActivity {
         btnSubmit = findViewById(R.id.btnSubmit);
         if (cNews != null) {
             etTitle.setText(cNews.getTitle());
-            etURL.setText(cNews.getSourceHashtag());
+            etURL.setText(cNews.getHashtag());
             etPostContent.setText(cNews.getPostContent());
             etSource.setText(String.valueOf(cNews.getCategory()));
             etSourceURL.setText(String.valueOf(cNews.getHashtag()));
             etImageURL.setText(String.valueOf(cNews.getImage()));
             updateID = cNews.getPid();
+            titleMain.setText("Update News");
 
         }
         btnSubmit.setOnClickListener(new View.OnClickListener() {
