@@ -1,11 +1,13 @@
 package com.example.prm392_group3.activities.blog;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.prm392_group3.R;
 import com.example.prm392_group3.activities.store.AddOrUpddateBike;
+import com.example.prm392_group3.models.Bike;
 import com.example.prm392_group3.models.News;
 import com.example.prm392_group3.models.User;
 import com.example.prm392_group3.utils.ObjectStorageUtil;
@@ -31,8 +34,13 @@ public class CreateNewsActivity extends AppCompatActivity {
     private EditText etPostContent;
     private EditText etSource;
     private EditText etSourceURL;
+
+    private TextView titleMain;
+
     private EditText etImageURL;
     private Button btnSubmit;
+    private News cNews;
+
     private ImageView backButton;
     DatabaseReference myRef;
     FirebaseDatabase database;
@@ -46,6 +54,7 @@ public class CreateNewsActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("News");
         userDetails = ObjectStorageUtil.loadObject(CreateNewsActivity.this, "user_data.json", User.class);
+        cNews = (News) getIntent().getSerializableExtra("News");
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +70,17 @@ public class CreateNewsActivity extends AppCompatActivity {
         etSourceURL = findViewById(R.id.etSourceURL);
         etImageURL = findViewById(R.id.etImageURL);
         btnSubmit = findViewById(R.id.btnSubmit);
+        if (cNews != null) {
+            titleMain.setText("Update Bike");
+            etTitle.setText(cNews.getTitle());
+            etURL.setText(cNews.getUrl());
+            etPostContent.setText(cNews.getPostContent());
+            etSource.setText(String.valueOf(cNews.getSource()));
+            etSourceURL.setText(String.valueOf(cNews.getSourceUrl()));
+            etImageURL.setText(String.valueOf(cNews.getImage()));
 
+
+        }
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +93,11 @@ public class CreateNewsActivity extends AppCompatActivity {
                 String imageURL = etImageURL.getText().toString().trim();
                 Calendar calendar = Calendar.getInstance();
                 Date currentDate = calendar.getTime();
-
+                if (TextUtils.isEmpty(title) || TextUtils.isEmpty(url) ||
+                        TextUtils.isEmpty(postContent) || TextUtils.isEmpty(source)|| TextUtils.isEmpty(imageURL)) {
+                    Toast.makeText(CreateNewsActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 // Create a News object with the retrieved data
                 News news = new News("",currentDate, title, url, postContent, source, sourceURL, imageURL,userDetails.getId());
                 // Add the news to Firebase database

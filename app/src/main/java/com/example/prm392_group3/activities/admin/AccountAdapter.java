@@ -23,7 +23,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountH
     @NonNull
     @Override
     public AccountHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_admin_user, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_admin_account, parent, false);
         return new AccountHolder(v);
     }
 
@@ -32,7 +32,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountH
         holder.imv_ava.setImageResource(acc.get(position).getAvatar());
         holder.tv_title.setText(acc.get(position).getEmail());
         holder.tv_des.setText(acc.get(position).getRole());
-        //holder.tv.phone.setText(acc.get(position).getRole());
+        holder.tv_phone.setText(acc.get(position).getRole());
 
     }
 
@@ -45,11 +45,14 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountH
         ImageView imv_ava;
         TextView tv_title;
         TextView tv_des;
+        TextView tv_phone;
+
         public AccountHolder(@NonNull View itemView) {
             super(itemView);
             imv_ava= itemView.findViewById(R.id.imgAvatar);
             tv_title = itemView.findViewById(R.id.tvRec);
             tv_des = itemView.findViewById(R.id.tvDes);
+            tv_phone = itemView.findViewById(R.id.tv_phone);
         }
     }
 }

@@ -56,6 +56,7 @@ public class BikeAdapter extends RecyclerView.Adapter<BikeAdapter.ViewHolder> {
     public BikeAdapter(Context context, List<Bike> bikeList) {
         this.context = context;
         this.bikeList = bikeList;
+
         this.userDetails = ObjectStorageUtil.loadObject(context, "user_data.json", User.class);
     }
 
