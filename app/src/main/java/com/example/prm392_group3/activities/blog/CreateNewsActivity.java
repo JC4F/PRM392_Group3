@@ -36,6 +36,7 @@ public class CreateNewsActivity extends AppCompatActivity {
     private EditText etSourceURL;
 
     private TextView titleMain;
+    private String updateID;
 
     private EditText etImageURL;
     private Button btnSubmit;
@@ -71,20 +72,20 @@ public class CreateNewsActivity extends AppCompatActivity {
         etImageURL = findViewById(R.id.etImageURL);
         btnSubmit = findViewById(R.id.btnSubmit);
         if (cNews != null) {
-            titleMain.setText("Update Bike");
             etTitle.setText(cNews.getTitle());
-            etURL.setText(cNews.getHashtag());
+            etURL.setText(cNews.getSourceHashtag());
             etPostContent.setText(cNews.getPostContent());
             etSource.setText(String.valueOf(cNews.getCategory()));
             etSourceURL.setText(String.valueOf(cNews.getHashtag()));
             etImageURL.setText(String.valueOf(cNews.getImage()));
-
+            updateID = cNews.getPid();
 
         }
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Retrieve data from EditText fields
+                updateID = updateID;
                 String title = etTitle.getText().toString().trim();
                 String url = etURL.getText().toString().trim();
                 String postContent = etPostContent.getText().toString().trim();
@@ -98,28 +99,51 @@ public class CreateNewsActivity extends AppCompatActivity {
                     Toast.makeText(CreateNewsActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                // Create a News object with the retrieved data
-                News news = new News("",currentDate, title, url, postContent, source, sourceURL, imageURL,userDetails.getId());
-                // Add the news to Firebase database
-                news.setPid(myRef.push().getKey());
+                if (updateID != null) {
+                    // Update operation
+                    News news = new News(updateID, currentDate, title, url, postContent, source, sourceURL, imageURL, userDetails.getId());
 
-                myRef.child(myRef.push().getKey()).setValue(news)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                // Show a success message or perform any other operations
-                                Toast.makeText(CreateNewsActivity.this, "News added successfully", Toast.LENGTH_SHORT).show();
-                                finish(); // Close the activity after adding news
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                // Show an error message or perform any other error handling
-                                Log.e("Error", e.getMessage());
-                                Toast.makeText(CreateNewsActivity.this, "Failed to add news: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                    myRef.child(updateID).setValue(news)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    // Show a success message or perform any other operations
+                                    Toast.makeText(CreateNewsActivity.this, "News updated successfully", Toast.LENGTH_SHORT).show();
+                                    finish(); // Close the activity after updating news
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Show an error message or perform any other error handling
+                                    Log.e("Error", e.getMessage());
+                                    Toast.makeText(CreateNewsActivity.this, "Failed to update news: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
+                else {
+                    // Create operation
+                    News news = new News("", currentDate, title, url, postContent, source, sourceURL, imageURL, userDetails.getId());
+                    news.setPid(myRef.push().getKey());
+
+                    myRef.child(news.getPid()).setValue(news)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    // Show a success message or perform any other operations
+                                    Toast.makeText(CreateNewsActivity.this, "News added successfully", Toast.LENGTH_SHORT).show();
+                                    finish(); // Close the activity after adding news
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Show an error message or perform any other error handling
+                                    Log.e("Error", e.getMessage());
+                                    Toast.makeText(CreateNewsActivity.this, "Failed to add news: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
             }
         });
     }

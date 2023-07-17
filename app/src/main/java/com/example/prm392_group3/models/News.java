@@ -1,8 +1,9 @@
 package com.example.prm392_group3.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class News {
+public class News implements Serializable {
 
     private String pid;
     private Date postDate;
@@ -80,6 +81,9 @@ public class News {
 
     public String getHashtag() {
         return "#"+hashtag.toUpperCase();
+    }
+    public String getSourceHashtag() {
+        return hashtag.toUpperCase();
     }
 
     public void setHashtag(String hashtag) {
