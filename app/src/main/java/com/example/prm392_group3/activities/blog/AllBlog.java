@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +52,9 @@ public class AllBlog extends Fragment {
     private RecyclerView recyclerView;
     private NewsAdapter adapter;
     private List<News> newsList;
+    private EditText etQuery;
+    private Button btnSearch;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -75,6 +79,7 @@ public class AllBlog extends Fragment {
      * @return A new instance of fragment AllBlog.
      */
     // TODO: Rename and change types and number of parameters
+    @NonNull
     public static AllBlog newInstance(String param1, String param2) {
         AllBlog fragment = new AllBlog();
         Bundle args = new Bundle();
@@ -101,8 +106,18 @@ public class AllBlog extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_all_blog, container, false);
+        etQuery = view.findViewById(R.id.etQuery);
+        btnSearch = view.findViewById(R.id.btnSearch);
 
         addNewsButton = view.findViewById(R.id.btnInsert);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String query = etQuery.getText().toString().trim();
+                searchNews(query);
+            }
+        });
+
         addNewsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,6 +154,33 @@ public class AllBlog extends Fragment {
         return view;
     }
 
+    private void searchNews(String query) {
+        // Perform the search operation based on the query
+        Query searchQuery = newsRef.orderByChild("title").startAt(query).endAt(query + "\uf8ff");
+
+        searchQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                newsList.clear(); // Clear the existing newsList before adding new data
+
+                for (DataSnapshot newsSnapshot : dataSnapshot.getChildren()) {
+                    News news = newsSnapshot.getValue(News.class);
+                    if (news != null) {
+                        newsList.add(news);
+                    }
+                }
+
+                adapter.notifyDataSetChanged(); // Notify the adapter that the data has changed
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle any errors that occur during data retrieval
+                Log.e("searchNews", "Failed to search news: " + databaseError.getMessage());
+                Toast.makeText(getActivity(), "Failed to search news", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private void loadNewsData() {
         Query query;

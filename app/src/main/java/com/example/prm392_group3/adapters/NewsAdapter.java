@@ -43,11 +43,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         // Bind the data to the views in the NewsViewHolder
         holder.newsTitle.setText(newsItem.getTitle());
         holder.newsDesc.setText(newsItem.getPostContent());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM", Locale.getDefault());
         String formattedDate = dateFormat.format(newsItem.getPostDate());
         Picasso.get().load(newsItem.getImage()).into(holder.newsImage);
         holder.newsDate.setText(formattedDate);
-        holder.newsSource.setText(newsItem.getSource());
+        holder.newsSource.setText(newsItem.getCategory());
+        holder.newsView.setText(newsItem.getHashtag());
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
